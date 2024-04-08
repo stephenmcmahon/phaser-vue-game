@@ -1,6 +1,7 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
+var playText;
 export class MainMenu extends Scene
 {
     logoTween;
@@ -21,6 +22,16 @@ export class MainMenu extends Scene
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setDepth(100).setOrigin(0.5);
+
+        playText = this.add.text(960, 800, 'Play Game', {
+            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        }).setDepth(100).setOrigin(0.5);
+        playText.setInteractive();
+        playText.on('pointerdown', function() {
+            console.log('click');
+        });
         
         EventBus.emit('current-scene-ready', this);
     }
