@@ -105,6 +105,14 @@ export class Game extends Scene
             gameOver = true;
         }
 
+        if (gameOver === true) {
+            this.add.text(960, 650, 'Game Over', {
+                fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                stroke: '#000000', strokeThickness: 8,
+                align: 'center'
+            }).setDepth(100).setOrigin(0.5);
+        }
+
         EventBus.emit('current-scene-ready', this);
     }
 

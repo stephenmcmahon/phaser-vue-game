@@ -30,7 +30,7 @@ export class MainMenu extends Scene
         }).setDepth(100).setOrigin(0.5);
         playText.setInteractive();
         playText.on('pointerdown', function() {
-            console.log('click');
+            this.scene.changeScene();
         });
         
         EventBus.emit('current-scene-ready', this);
