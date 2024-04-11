@@ -24,7 +24,7 @@ export class Game extends Scene
 
         
         platforms = this.physics.add.staticGroup();
-        platforms.create(960, 950, 'ground').setScale(2).refreshBody();
+        platforms.create(0, 800, 'ground').setScale(2).refreshBody();
         platforms.create(960, 400, 'ground');
         platforms.create(800, 250, 'ground');
         platforms.create(1000, 600, 'ground');
@@ -83,7 +83,7 @@ export class Game extends Scene
             star.disableBody(true, true);
             score += 10;
             scoreText.setText('Score: ' + score);
-            if (stars.countActive(true) === 0)
+            if (stars.countActive(true) === 10)
             {
                 stars.children.iterate(function (child) {
                     child.enableBody(true, child.x, 0, true, true);
@@ -103,14 +103,15 @@ export class Game extends Scene
             player.setTint(0xff0000);
             player.anims.play('turn');
             gameOver = true;
-        }
+            if (gameOver === true) {
+                this.add.text(600, 400, 'Game Over', {
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center'
+                }).setDepth(100).setOrigin(0.5);
 
-        if (gameOver === true) {
-            this.add.text(960, 650, 'Game Over', {
-                fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                stroke: '#000000', strokeThickness: 8,
-                align: 'center'
-            }).setDepth(100).setOrigin(0.5);
+                // this.scene.changeScene();
+            }
         }
 
         EventBus.emit('current-scene-ready', this);
@@ -143,8 +144,8 @@ export class Game extends Scene
         }
     }
 
-    changeScene ()
-    {
-        this.scene.start('GameOver');
-    }
+    // changeScene ()
+    // {
+    //     this.scene.start('GameOver');
+    // }
 }

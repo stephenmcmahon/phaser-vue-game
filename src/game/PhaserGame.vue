@@ -13,13 +13,13 @@ onMounted(() => {
 
     game.value = StartGame('game-container');
 
-    EventBus.on('current-scene-ready', (currentScene) => {
+    // EventBus.on('current-scene-ready', (currentScene) => {
 
-        emit('current-active-scene', currentScene);
+    //     emit('current-active-scene', currentScene);
 
-        scene.value = currentScene;
+    //     scene.value = currentScene;
 
-    });
+    // });
 
 });
 
