@@ -1,8 +1,8 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
-var playText;
 export class MainMenu extends Scene
+
 {
     // logoTween;
 
@@ -13,17 +13,17 @@ export class MainMenu extends Scene
 
     create ()
     {
-        this.add.image(960, 540, 'background');
+        this.add.image(600, 400, 'background');
 
-        this.logo = this.add.image(960, 540, 'logo').setDepth(100);
+        this.logo = this.add.image(600, 300, 'logo').setDepth(100);
 
-        this.add.text(960, 650, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+        this.add.text(600, 365, 'Main Menu', {
+            fontFamily: 'Arial Black', fontSize: 24, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 0,
             align: 'center'
         }).setDepth(100).setOrigin(0.5);
 
-        playText = this.add.text(960, 800, 'Play Game', {
+        var playText = this.add.text(600, 500, 'Play Game', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'

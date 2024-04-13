@@ -9,6 +9,8 @@ var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
+var restartText;
+var mainmenuText;
 export class Game extends Scene
 {
     constructor ()
@@ -20,7 +22,7 @@ export class Game extends Scene
     {
         this.cameras.main.setBackgroundColor(0x00ff00);
 
-        this.add.image(960, 540, 'background').setAlpha(0.5);
+        this.add.image(600, 400, 'background').setAlpha(0.5);
 
         
         platforms = this.physics.add.staticGroup();
@@ -110,7 +112,26 @@ export class Game extends Scene
                     align: 'center'
                 }).setDepth(100).setOrigin(0.5);
 
-                // this.scene.changeScene();
+
+                restartText = this.add.text(600, 450, 'Restart', {
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center'
+                }).setDepth(100).setOrigin(0.5);
+                restartText.setInteractive();
+                restartText.on('pointerdown', function() {
+                    this.scene.restartScene();
+                });
+                
+                mainmenuText = this.add.text(600, 500, 'Main Menu', {
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center'
+                }).setDepth(100).setOrigin(0.5);
+                mainmenuText.setInteractive();
+                mainmenuText.on('pointerdown', function() {
+                    this.scene.changeScene();
+                });
             }
         }
 
@@ -144,8 +165,13 @@ export class Game extends Scene
         }
     }
 
-    // changeScene ()
-    // {
-    //     this.scene.start('GameOver');
-    // }
+    changeScene ()
+    {
+        this.scene.start('MainMenu');
+    }
+
+    restartScene ()
+    {
+        this.scene.restart();
+    }
 }
