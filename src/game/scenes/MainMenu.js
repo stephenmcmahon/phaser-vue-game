@@ -1,8 +1,6 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
-
 export class MainMenu extends Scene
-
 {
     // logoTween;
 
