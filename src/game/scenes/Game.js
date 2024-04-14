@@ -1,16 +1,25 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
+// Assets
+var crosshair;
 var player;
 var stars;
 var bombs;
 var platforms;
-var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
 var restartText;
 var mainmenuText;
+
+// Layers
+// const layerBackground = this.add.layer();
+
+// Controls
+var aKey;
+var dKey;
+var wKey;
 export class Game extends Scene
 {
     constructor ()
@@ -20,11 +29,12 @@ export class Game extends Scene
 
     create ()
     {
+        score = 0;
+
         this.cameras.main.setBackgroundColor(0x00ff00);
 
         this.add.image(600, 400, 'background').setAlpha(0.5);
 
-        
         platforms = this.physics.add.staticGroup();
         platforms.create(0, 800, 'ground').setScale(2).refreshBody();
         platforms.create(960, 400, 'ground');
@@ -56,7 +66,9 @@ export class Game extends Scene
             repeat: -1
         });
 
-        cursors = this.input.keyboard.createCursorKeys();
+        aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
         stars = this.physics.add.group({
             key: 'star',
@@ -85,12 +97,12 @@ export class Game extends Scene
             star.disableBody(true, true);
             score += 10;
             scoreText.setText('Score: ' + score);
-            if (stars.countActive(true) === 10)
+            if (stars.countActive(true) === 2)
             {
                 stars.children.iterate(function (child) {
                     child.enableBody(true, child.x, 0, true, true);
                 });
-                var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+                var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
                 var bomb = bombs.create(x, 16, 'bomb');
                 bomb.setBounce(1);
                 bomb.setCollideWorldBounds(true);
@@ -110,14 +122,14 @@ export class Game extends Scene
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000', strokeThickness: 8,
                     align: 'center'
-                }).setDepth(100).setOrigin(0.5);
+                }).setDepth(1).setOrigin(0.5);
 
 
                 restartText = this.add.text(600, 450, 'Restart', {
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000', strokeThickness: 8,
                     align: 'center'
-                }).setDepth(100).setOrigin(0.5);
+                }).setDepth(1).setOrigin(0.5);
                 restartText.setInteractive();
                 restartText.on('pointerdown', function() {
                     this.scene.restartScene();
@@ -127,7 +139,7 @@ export class Game extends Scene
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000', strokeThickness: 8,
                     align: 'center'
-                }).setDepth(100).setOrigin(0.5);
+                }).setDepth(1).setOrigin(0.5);
                 mainmenuText.setInteractive();
                 mainmenuText.on('pointerdown', function() {
                     this.scene.changeScene();
@@ -135,18 +147,23 @@ export class Game extends Scene
             }
         }
 
+        crosshair = this.add.sprite(0, 0, 'cursorGame');
+        crosshair.setDepth(2);
+
         EventBus.emit('current-scene-ready', this);
     }
 
     update ()
     {
-        if (cursors.left.isDown)
+        var pointer = this.input.activePointer;
+
+        if (aKey.isDown)
         {
             player.setVelocityX(-250);
 
             player.anims.play('left', true);
         }
-        else if (cursors.right.isDown)
+        else if (dKey.isDown)
         {
             player.setVelocityX(250);
 
@@ -159,9 +176,13 @@ export class Game extends Scene
             player.anims.play('turn');
         }
 
-        if (cursors.up.isDown && player.body.touching.down)
+        if (wKey.isDown && player.body.touching.down)
         {
             player.setVelocityY(-1000);
+        }
+
+        if (pointer.active) {
+            crosshair.setPosition(pointer.x, pointer.y);
         }
     }
 

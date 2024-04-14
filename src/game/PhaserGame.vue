@@ -39,3 +39,9 @@ defineExpose({ scene, game });
 <template>
     <div id="game-container"></div>
 </template>
+
+<style>
+    #game-container {
+        cursor: none;
+    }
+</style>
