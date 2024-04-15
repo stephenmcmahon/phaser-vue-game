@@ -98,12 +98,6 @@ export class MainMenu extends Scene
 
     changeHowTo ()
     {
-        // if (this.logoTween)
-        // {
-        //     this.logoTween.stop();
-        //     this.logoTween = null;
-        // }
-
         this.scene.start('HowToPlay');
     }
 

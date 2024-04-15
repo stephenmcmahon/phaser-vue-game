@@ -44,25 +44,37 @@ export class Game extends Scene
         player = this.physics.add.sprite(100, 450, 'dude');
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
-        player.body.setGravityY(600);
+        player.body.setGravityY(500);
 
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         });
 
         this.anims.create({
             key: 'turn',
             frames: [ { key: 'dude', frame: 4 } ],
-            frameRate: 20
+            frameRate: 5
+        });
+
+        this.anims.create({
+            key: 'sideleft',
+            frames: [ { key: 'dude', frame: 0 } ],
+            frameRate: 5
+        });
+
+        this.anims.create({
+            key: 'sideright',
+            frames: [ { key: 'dude', frame: 5 } ],
+            frameRate: 5
         });
 
         this.anims.create({
             key: 'right',
             frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         });
 
@@ -162,12 +174,22 @@ export class Game extends Scene
             player.setVelocityX(-250);
 
             player.anims.play('left', true);
+
+            if (player.body.touching.none)
+            {
+                player.anims.play('sideleft', true);
+            }
         }
         else if (dKey.isDown)
         {
             player.setVelocityX(250);
 
             player.anims.play('right', true);
+
+            if (player.body.touching.none)
+            {
+                player.anims.play('sideright', true);
+            }
         }
         else
         {
@@ -175,10 +197,9 @@ export class Game extends Scene
 
             player.anims.play('turn');
         }
-
         if (wKey.isDown && player.body.touching.down)
         {
-            player.setVelocityY(-1000);
+            player.setVelocityY(-500);
         }
 
         if (pointer.active) {
