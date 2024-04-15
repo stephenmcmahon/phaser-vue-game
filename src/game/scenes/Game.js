@@ -82,7 +82,7 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(200, 200, 'score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(200, 200, 'Score: 0', { fontSize: '32px', fill: '#000' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
