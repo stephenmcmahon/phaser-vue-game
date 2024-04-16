@@ -7,6 +7,7 @@ var player;
 var stars;
 var bombs;
 var platforms;
+var walls;
 var score = 0;
 var gameOver = false;
 var scoreText;
@@ -31,20 +32,24 @@ export class Game extends Scene
     {
         score = 0;
 
-        this.cameras.main.setBackgroundColor(0x00ff00);
+        // this.cameras.main.setBackgroundColor(0x00ff00);
 
-        this.add.image(600, 400, 'background').setAlpha(0.5);
+        this.add.image(600, 400, 'backgroundGame');
 
         platforms = this.physics.add.staticGroup();
-        platforms.create(0, 800, 'ground').setScale(2).refreshBody();
-        platforms.create(960, 400, 'ground');
-        platforms.create(800, 250, 'ground');
-        platforms.create(1000, 600, 'ground');
+        platforms.create(600, 776, 'ground');
+        platforms.create(960, 400, 'ground').setScale(0.5).refreshBody();
+        platforms.create(800, 250, 'ground').setScale(0.5).refreshBody();
+        platforms.create(1000, 600, 'ground').setScale(0.5).refreshBody();
 
-        player = this.physics.add.sprite(100, 450, 'dude');
+        walls = this.physics.add.staticGroup();
+        walls.create(44, 400, 'wall');
+        walls.create(1156, 400, 'wall');
+
+        player = this.physics.add.sprite(200, 600, 'dude');
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
-        player.body.setGravityY(500);
+        player.body.setGravityY(1000);
 
         this.anims.create({
             key: 'left',
@@ -85,7 +90,7 @@ export class Game extends Scene
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
-            setXY: { x: 12, y: 0, stepX: 70 }
+            setXY: { x: 100, y: 0, stepX: 70 }
         });
 
         stars.children.iterate(function (child) {
@@ -99,6 +104,10 @@ export class Game extends Scene
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
         this.physics.add.collider(bombs, platforms);
+
+        this.physics.add.collider(player, walls);
+        this.physics.add.collider(stars, walls);
+        this.physics.add.collider(bombs, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
 
@@ -171,23 +180,27 @@ export class Game extends Scene
 
         if (aKey.isDown)
         {
-            player.setVelocityX(-250);
+            player.setVelocityX(-500);
 
             player.anims.play('left', true);
 
             if (player.body.touching.none)
             {
+                player.setVelocityX(-250);
+
                 player.anims.play('sideleft', true);
             }
         }
         else if (dKey.isDown)
         {
-            player.setVelocityX(250);
+            player.setVelocityX(500);
 
             player.anims.play('right', true);
 
             if (player.body.touching.none)
             {
+                player.setVelocityX(250);
+
                 player.anims.play('sideright', true);
             }
         }
