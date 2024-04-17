@@ -38,8 +38,8 @@ export class Game extends Scene
 
         platforms = this.physics.add.staticGroup();
         platforms.create(600, 776, 'ground');
-        platforms.create(960, 400, 'ground').setScale(0.5).refreshBody();
-        platforms.create(800, 250, 'ground').setScale(0.5).refreshBody();
+        platforms.create(700, 400, 'ground').setScale(0.5).refreshBody();
+        platforms.create(600, 250, 'ground').setScale(0.5).refreshBody();
         platforms.create(1000, 600, 'ground').setScale(0.5).refreshBody();
 
         walls = this.physics.add.staticGroup();
@@ -90,16 +90,17 @@ export class Game extends Scene
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
-            setXY: { x: 100, y: 0, stepX: 70 }
+            setXY: { x: 600, y: 0, stepX: Phaser.Math.Between(-35, 35) }
         });
 
         stars.children.iterate(function (child) {
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+            child.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+            child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 20));
         });
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(200, 200, 'Score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(30, 30, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
@@ -212,7 +213,7 @@ export class Game extends Scene
         }
         if (wKey.isDown && player.body.touching.down)
         {
-            player.setVelocityY(-500);
+            player.setVelocityY(-700);
         }
 
         if (pointer.active) {
