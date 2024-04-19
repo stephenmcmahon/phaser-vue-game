@@ -43,7 +43,6 @@ export class Game extends Scene
         platforms.create(Phaser.Math.Between(322, 878), 424, 'platformMid');
         platforms.create(Phaser.Math.Between(183, 1017), 248, 'platformHigh');
         
-
         walls = this.physics.add.staticGroup();
         walls.create(0, 400, 'wall');
         walls.create(1200, 400, 'wall');
@@ -92,7 +91,7 @@ export class Game extends Scene
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
-            setXY: { x: 600, y: 150, stepX: Phaser.Math.Between(-35, 35) }
+            setXY: { x: 600, y: 25, stepX: Phaser.Math.Between(-35, 35) }
         });
 
         stars.children.iterate(function (child) {
@@ -120,7 +119,16 @@ export class Game extends Scene
         function collectStar (player, star)
         {
             star.disableBody(true, true);
-            score += 10;
+            if (player.y > 600) {
+              score += 10;
+            } 
+            else if (player.y > 248){
+              score += 15;
+            }
+            else {
+              score += 25;
+            }
+
             scoreText.setText('Score: ' + score);
             if (stars.countActive(true) === 0)
             {
