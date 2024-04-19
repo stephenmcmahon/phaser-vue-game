@@ -37,14 +37,16 @@ export class Game extends Scene
         this.add.image(600, 400, 'backgroundGame');
 
         platforms = this.physics.add.staticGroup();
+        platforms.create(600, -10, 'ground');
         platforms.create(600, 776, 'ground');
-        platforms.create(700, 400, 'ground').setScale(0.5).refreshBody();
-        platforms.create(600, 250, 'ground').setScale(0.5).refreshBody();
-        platforms.create(1000, 600, 'ground').setScale(0.5).refreshBody();
+        platforms.create(Phaser.Math.Between(461, 739), 600, 'platformLow');
+        platforms.create(Phaser.Math.Between(322, 878), 424, 'platformMid');
+        platforms.create(Phaser.Math.Between(183, 1017), 248, 'platformHigh');
+        
 
         walls = this.physics.add.staticGroup();
-        walls.create(44, 400, 'wall');
-        walls.create(1156, 400, 'wall');
+        walls.create(0, 400, 'wall');
+        walls.create(1200, 400, 'wall');
 
         player = this.physics.add.sprite(200, 600, 'dude');
         player.setBounce(0.2);
@@ -90,17 +92,18 @@ export class Game extends Scene
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
-            setXY: { x: 600, y: 0, stepX: Phaser.Math.Between(-35, 35) }
+            setXY: { x: 600, y: 150, stepX: Phaser.Math.Between(-35, 35) }
         });
 
         stars.children.iterate(function (child) {
             child.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
-            child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 20));
+            child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+            child.setFrictionX(Phaser.Math.Between(0.5, 0.6));
         });
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(30, 30, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score, { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
@@ -119,10 +122,11 @@ export class Game extends Scene
             star.disableBody(true, true);
             score += 10;
             scoreText.setText('Score: ' + score);
-            if (stars.countActive(true) === 2)
+            if (stars.countActive(true) === 0)
             {
                 stars.children.iterate(function (child) {
-                    child.enableBody(true, child.x, 0, true, true);
+                    child.enableBody(true, 600, 150, true, true);
+                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
                 });
                 var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
                 var bomb = bombs.create(x, 16, 'bomb');
@@ -140,6 +144,19 @@ export class Game extends Scene
             player.anims.play('turn');
             gameOver = true;
             if (gameOver === true) {
+                this.add.text(600, 200, 'Score:', { 
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center' 
+                }).setDepth(1).setOrigin(0.5);
+
+                this.add.text(600, 300, score, { 
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000', strokeThickness: 8,
+                    align: 'center' 
+                }).setDepth(1).setOrigin(0.5);
+
+
                 this.add.text(600, 400, 'Game Over', {
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000', strokeThickness: 8,
