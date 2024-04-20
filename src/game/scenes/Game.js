@@ -5,6 +5,7 @@ import { Scene } from 'phaser';
 var crosshair;
 var player;
 var stars;
+var grenades;
 var bombs;
 var platforms;
 var walls;
@@ -21,12 +22,15 @@ var mainmenuText;
 var aKey;
 var dKey;
 var wKey;
+
 export class Game extends Scene
 {
     constructor ()
     {
         super('Game');
     }
+
+    
 
     create ()
     {
@@ -100,6 +104,8 @@ export class Game extends Scene
             child.setFrictionX(Phaser.Math.Between(0.5, 0.6));
         });
 
+        grenades = this.physics.add.group();
+
         bombs = this.physics.add.group();
 
         scoreText = this.add.text(70, 30, 'Score: ' + score, { fontSize: '32px', fill: '#fff' });
@@ -107,12 +113,18 @@ export class Game extends Scene
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
         this.physics.add.collider(bombs, platforms);
+        this.physics.add.collider(grenades, platforms);
 
         this.physics.add.collider(player, walls);
         this.physics.add.collider(stars, walls);
         this.physics.add.collider(bombs, walls);
+        this.physics.add.collider(grenades, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
+
+        this.input.on('pointerdown', function(pointer) {
+            shootGrenade.call(this, pointer.x, pointer.y);
+        }, this);
 
         this.physics.add.collider(player, bombs, hitBomb, null, this);
 
@@ -145,6 +157,19 @@ export class Game extends Scene
             }
         }
 
+        function shootGrenade(x, y) {
+            const grenade = this.physics.add.image(player.x, player.y, 'grenade');
+            grenade.setOrigin(0.8, 0.8);
+            grenades.add(grenade);
+            this.physics.moveTo(grenade, x, y, 700);
+            grenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+            grenade.body.setGravityY(700);
+            grenade.body.setFrictionX(Phaser.Math.Between(0.8, 0.9));
+            setTimeout(function() {
+                grenade.disableBody(true, true);
+            }, 1500);
+        }
+
         function hitBomb (player, bomb)
         {
             this.physics.pause();
@@ -164,13 +189,11 @@ export class Game extends Scene
                     align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
-
                 this.add.text(600, 400, 'Game Over', {
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000', strokeThickness: 8,
                     align: 'center'
                 }).setDepth(1).setOrigin(0.5);
-
 
                 restartText = this.add.text(600, 450, 'Restart', {
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
@@ -192,7 +215,7 @@ export class Game extends Scene
                     this.scene.changeScene();
                 });
             }
-        }
+        }   
 
         crosshair = this.add.sprite(0, 0, 'cursorGame');
         crosshair.setDepth(2);
@@ -238,7 +261,7 @@ export class Game extends Scene
         }
         if (wKey.isDown && player.body.touching.down)
         {
-            player.setVelocityY(-700);
+            player.setVelocityY(-900);
         }
 
         if (pointer.active) {
