@@ -48,6 +48,10 @@ export class Preloader extends Scene
             'dude.png',
             { frameWidth: 48, frameHeight: 96 }
         );
+        this.load.spritesheet('explosion',
+            'explosion.png',
+            { frameWidth: 50, frameHeight: 50 }
+        );
     }
 
     create ()

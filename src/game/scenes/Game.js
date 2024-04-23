@@ -7,6 +7,7 @@ var player;
 var stars;
 var grenades;
 var bombs;
+var explosion;
 var platforms;
 var walls;
 var score = 0;
@@ -56,6 +57,11 @@ export class Game extends Scene
         player.setCollideWorldBounds(true);
         player.body.setGravityY(1000);
 
+        explosion = this.physics.add.sprite(100, 100, 'explosion')
+        explosion.setScale(1);
+        explosion.setVisible(false);
+        explosion.setCollideWorldBounds(true);
+
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -86,6 +92,13 @@ export class Game extends Scene
             frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
             frameRate: 15,
             repeat: -1
+        });
+
+        this.anims.create({
+            key: 'explosion',
+            frames: this.anims.generateFrameNumbers('explosion', { start: 1, end: 15 }),
+            frameRate: 30,
+            repeat: 0
         });
 
         aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -161,11 +174,15 @@ export class Game extends Scene
             const grenade = this.physics.add.image(player.x, player.y, 'grenade');
             grenade.setOrigin(0.8, 0.8);
             grenades.add(grenade);
-            this.physics.moveTo(grenade, x, y, 700);
+            this.physics.moveTo(grenade, x, y, 800);
             grenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
-            grenade.body.setGravityY(700);
+            grenade.body.setGravityY(600);
             grenade.body.setFrictionX(Phaser.Math.Between(0.8, 0.9));
             setTimeout(function() {
+                explosion.setPosition(grenade.x, grenade.y);
+                explosion.setVisible(true);
+                explosion.anims.play('explosion');
+                explosion.allowGravity = false;
                 grenade.disableBody(true, true);
             }, 1500);
         }
