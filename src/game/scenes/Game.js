@@ -2,6 +2,7 @@ import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 
 // Assets
+var pointer;
 var crosshair;
 var player;
 var stars;
@@ -37,6 +38,8 @@ export class Game extends Scene
     {
         score = 0;
 
+        pointer = this.input.activePointer;
+
         // this.cameras.main.setBackgroundColor(0x00ff00);
 
         this.add.image(600, 400, 'backgroundGame');
@@ -56,12 +59,7 @@ export class Game extends Scene
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.body.setGravityY(1000);
-
-        explosion = this.physics.add.sprite(100, 100, 'explosion')
-        explosion.setScale(1);
-        explosion.setVisible(false);
-        explosion.setCollideWorldBounds(true);
-
+ 
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -97,7 +95,7 @@ export class Game extends Scene
         this.anims.create({
             key: 'explosion',
             frames: this.anims.generateFrameNumbers('explosion', { start: 1, end: 15 }),
-            frameRate: 30,
+            frameRate: 60,
             repeat: 0
         });
 
@@ -119,6 +117,10 @@ export class Game extends Scene
 
         grenades = this.physics.add.group();
 
+        explosion = this.physics.add.sprite(100, 100, 'explosion')
+        explosion.setScale(5);
+        explosion.setVisible(false);
+
         bombs = this.physics.add.group();
 
         scoreText = this.add.text(70, 30, 'Score: ' + score, { fontSize: '32px', fill: '#fff' });
@@ -127,17 +129,31 @@ export class Game extends Scene
         this.physics.add.collider(stars, platforms);
         this.physics.add.collider(bombs, platforms);
         this.physics.add.collider(grenades, platforms);
+        this.physics.add.collider(explosion, platforms);
 
         this.physics.add.collider(player, walls);
         this.physics.add.collider(stars, walls);
         this.physics.add.collider(bombs, walls);
         this.physics.add.collider(grenades, walls);
+        this.physics.add.collider(explosion, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
 
-        this.input.on('pointerdown', function(pointer) {
-            shootGrenade.call(this, pointer.x, pointer.y);
-        }, this);
+        let functionEnabled = true;
+
+        const pointerDownHandler = function(pointer) {
+            if (functionEnabled) {
+                shootGrenade.call(this, pointer.x, pointer.y);
+                
+                functionEnabled = false;
+                
+                setTimeout(() => {
+                    functionEnabled = true;
+                }, 1000); 
+            }
+        };
+
+        this.input.on('pointerdown', pointerDownHandler, this);
 
         this.physics.add.collider(player, bombs, hitBomb, null, this);
 
@@ -145,13 +161,13 @@ export class Game extends Scene
         {
             star.disableBody(true, true);
             if (player.y > 600) {
-              score += 10;
+              score += 3;
             } 
             else if (player.y > 248){
-              score += 15;
+              score += 5;
             }
             else {
-              score += 25;
+              score += 7;
             }
 
             scoreText.setText('Score: ' + score);
@@ -172,18 +188,22 @@ export class Game extends Scene
 
         function shootGrenade(x, y) {
             const grenade = this.physics.add.image(player.x, player.y, 'grenade');
-            grenade.setOrigin(0.8, 0.8);
+            grenade.setOrigin(0, 0);
             grenades.add(grenade);
             this.physics.moveTo(grenade, x, y, 800);
             grenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
-            grenade.body.setGravityY(600);
-            grenade.body.setFrictionX(Phaser.Math.Between(0.8, 0.9));
+            grenade.body.setGravityY(200);
+            grenade.body.setFrictionX(Phaser.Math.Between(5, 6));
             setTimeout(function() {
                 explosion.setPosition(grenade.x, grenade.y);
+                explosion.setOrigin(0.8, 0.8);
                 explosion.setVisible(true);
                 explosion.anims.play('explosion');
-                explosion.allowGravity = false;
-                grenade.disableBody(true, true);
+                explosion.body.setAllowGravity(false);
+                grenade.setVisible(false);
+                setTimeout(function() {
+                    explosion.setVisible(false);
+                }, 300);
             }, 1500);
         }
 
@@ -242,8 +262,6 @@ export class Game extends Scene
 
     update ()
     {
-        var pointer = this.input.activePointer;
-
         if (aKey.isDown)
         {
             player.setVelocityX(-500);
