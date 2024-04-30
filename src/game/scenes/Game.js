@@ -5,6 +5,7 @@ import { Scene } from 'phaser';
 var pointer;
 var crosshair;
 var player;
+var mobs;
 var stars;
 var grenades;
 var bombs;
@@ -103,6 +104,12 @@ export class Game extends Scene
         dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+        mobs = this.physics.add.group({
+            key: 'mob',
+            repeat: 5,
+            setXY: { x: 200, y: 25, stepX: 150 }
+        });
+
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
@@ -126,18 +133,22 @@ export class Game extends Scene
         scoreText = this.add.text(70, 30, 'Score: ' + score, { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
+        this.physics.add.collider(mobs, platforms);
         this.physics.add.collider(stars, platforms);
         this.physics.add.collider(bombs, platforms);
         this.physics.add.collider(grenades, platforms);
         this.physics.add.collider(explosion, platforms);
 
         this.physics.add.collider(player, walls);
+        this.physics.add.collider(mobs, walls);
         this.physics.add.collider(stars, walls);
         this.physics.add.collider(bombs, walls);
         this.physics.add.collider(grenades, walls);
         this.physics.add.collider(explosion, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
+
+        this.physics.add.overlap(explosion, mobs, killMob, null, this);
 
         let functionEnabled = true;
 
@@ -186,6 +197,18 @@ export class Game extends Scene
             }
         }
 
+        function killMob (explosion, mob)
+        {
+            mob.disableBody(true, true);
+            if (mobs.countActive(true) === 0)
+            {
+                mobs.children.iterate(function (child) {
+                    child.enableBody(true, 600, 150, true, true);
+                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+                });
+            }
+        }
+
         function shootGrenade(x, y) {
             const grenade = this.physics.add.image(player.x, player.y, 'grenade');
             grenade.setOrigin(0, 0);
@@ -216,7 +239,7 @@ export class Game extends Scene
             if (gameOver === true) {
                 this.add.text(600, 200, 'Score:', { 
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000', strokeThickness: 8,
+                    stroke: '#000000',astrokeThickness: 8,
                     align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
