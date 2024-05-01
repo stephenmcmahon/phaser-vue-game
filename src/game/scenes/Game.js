@@ -185,7 +185,7 @@ export class Game extends Scene
             if (stars.countActive(true) === 0)
             {
                 stars.children.iterate(function (child) {
-                    child.enableBody(true, 600, 150, true, true);
+                    child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
                     child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
                 });
                 var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
@@ -203,8 +203,7 @@ export class Game extends Scene
             if (mobs.countActive(true) === 0)
             {
                 mobs.children.iterate(function (child) {
-                    child.enableBody(true, 600, 150, true, true);
-                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+                    child.enableBody(true, Phaser.Math.Between(50, 1150), 150, true, true);
                 });
             }
         }
