@@ -13,6 +13,7 @@ var explosion;
 var platforms;
 var walls;
 var score = 0;
+var pointsCollected = 0;
 var gameOver = false;
 var scoreText;
 var restartText;
@@ -38,6 +39,8 @@ export class Game extends Scene
     create ()
     {
         score = 0;
+
+        pointsCollected = 0;
 
         pointer = this.input.activePointer;
 
@@ -130,7 +133,7 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(70, 30, 'Score: ' + score, { fontSize: '32px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score + 'Points Collected: ' + pointsCollected, { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -171,6 +174,9 @@ export class Game extends Scene
         function collectStar (player, star)
         {
             star.disableBody(true, true);
+
+            pointsCollected += 1;
+
             if (player.y > 600) {
               score += 3;
             } 
@@ -181,7 +187,8 @@ export class Game extends Scene
               score += 7;
             }
 
-            scoreText.setText('Score: ' + score);
+            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
+
             if (stars.countActive(true) === 0)
             {
                 stars.children.iterate(function (child) {
@@ -324,6 +331,10 @@ export class Game extends Scene
         if (pointer.active) {
             crosshair.setPosition(pointer.x, pointer.y);
         }
+
+        mobs.children.iterate(function (child) {
+          child.setVelocityX(Phaser.Math.Between(-250, 250));
+        });
     }
 
     changeScene ()
