@@ -227,11 +227,13 @@ export class Game extends Scene
                 explosion.setPosition(grenade.x, grenade.y);
                 explosion.setOrigin(0.8, 0.8);
                 explosion.setVisible(true);
+                explosion.enableBody(true, grenade.x, grenade.y, true, true);
                 explosion.anims.play('explosion');
                 explosion.body.setAllowGravity(false);
                 grenade.setVisible(false);
                 setTimeout(function() {
                     explosion.setVisible(false);
+                    explosion.disableBody(true, true);
                 }, 300);
             }, 1500);
         }
@@ -333,8 +335,8 @@ export class Game extends Scene
         }
 
         mobs.children.iterate(function (child) {
-          child.setVelocityX(Phaser.Math.Between(-250, 250));
-        });
+            child.setVelocityX(Phaser.Math.Between(-15, 15));
+        });     
     }
 
     changeScene ()
