@@ -107,6 +107,22 @@ export class Game extends Scene
         dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+        const pointerDownHandler = function(pointer) {
+            if (functionEnabled) {
+                shootGrenade.call(this, pointer.x, pointer.y);
+                
+                functionEnabled = false;
+                
+                setTimeout(() => {
+                    functionEnabled = true;
+                }, 1000); 
+            }
+        };
+
+        this.input.on('pointerdown', pointerDownHandler, this);
+
+        let functionEnabled = true;
+
         mobs = this.physics.add.group({
             key: 'mob',
             repeat: 5,
@@ -153,21 +169,9 @@ export class Game extends Scene
 
         this.physics.add.overlap(explosion, mobs, killMob, null, this);
 
-        let functionEnabled = true;
+        this.physics.add.overlap(explosion, bombs, killBomb, null, this);
 
-        const pointerDownHandler = function(pointer) {
-            if (functionEnabled) {
-                shootGrenade.call(this, pointer.x, pointer.y);
-                
-                functionEnabled = false;
-                
-                setTimeout(() => {
-                    functionEnabled = true;
-                }, 1000); 
-            }
-        };
-
-        this.input.on('pointerdown', pointerDownHandler, this);
+        this.physics.add.overlap(explosion, stars, killStar, null, this);
 
         this.physics.add.collider(player, bombs, hitBomb, null, this);
 
@@ -199,7 +203,7 @@ export class Game extends Scene
                 var bomb = bombs.create(x, 16, 'bomb');
                 bomb.setBounce(1);
                 bomb.setCollideWorldBounds(true);
-                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                bomb.setVelocity(Phaser.Math.Between(-600, 600), 20);
                 bomb.allowGravity = false;
             }
         }
@@ -207,11 +211,40 @@ export class Game extends Scene
         function killMob (explosion, mob)
         {
             mob.disableBody(true, true);
+            score += 5;
+            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
             if (mobs.countActive(true) === 0)
             {
                 mobs.children.iterate(function (child) {
                     child.enableBody(true, Phaser.Math.Between(50, 1150), 150, true, true);
                 });
+            }
+        }
+
+        function killBomb (explosion, bomb)
+        {
+            score += 7;
+            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
+            bomb.disableBody(true, true);
+        }
+
+        function killStar (explosion, star)
+        {
+            star.disableBody(true, true);
+            score -= 1;
+            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected); 
+            if (stars.countActive(true) === 0)
+            {
+                stars.children.iterate(function (child) {
+                    child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
+                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+                });
+                var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+                var bomb = bombs.create(x, 16, 'bomb');
+                bomb.setBounce(1);
+                bomb.setCollideWorldBounds(true);
+                bomb.setVelocity(Phaser.Math.Between(-600, 600), 20);
+                bomb.allowGravity = false;
             }
         }
 
@@ -225,7 +258,7 @@ export class Game extends Scene
             grenade.body.setFrictionX(Phaser.Math.Between(5, 6));
             setTimeout(function() {
                 explosion.setPosition(grenade.x, grenade.y);
-                explosion.setOrigin(0.8, 0.8);
+                explosion.setOrigin(0.5, 0.5);
                 explosion.setVisible(true);
                 explosion.enableBody(true, grenade.x, grenade.y, true, true);
                 explosion.anims.play('explosion');
