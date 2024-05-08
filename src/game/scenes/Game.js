@@ -103,6 +103,20 @@ export class Game extends Scene
             repeat: 0
         });
 
+        this.anims.create({
+            key: 'mobmoveright',
+            frames: this.anims.generateFrameNumbers('mob', { start: 5, end: 8 }),
+            frameRate: 15,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'mobmoveleft',
+            frames: this.anims.generateFrameNumbers('mob', { start: 0, end: 3 }),
+            frameRate: 15,
+            repeat: -1
+        });
+
         aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -368,7 +382,16 @@ export class Game extends Scene
         }
 
         mobs.children.iterate(function (child) {
-            child.setVelocityX(Phaser.Math.Between(-15, 15));
+            child.setVelocityX(Phaser.Math.Between(-30, 30));
+            if (child.body.velocity.x > 0)
+            {
+                child.anims.play('mobmoveright', true);
+            }
+            else
+            {
+                child.anims.play('mobmoveleft', true);
+            }
+            
         });     
     }
 
