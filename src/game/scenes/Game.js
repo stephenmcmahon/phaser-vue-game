@@ -7,9 +7,11 @@ var crosshair;
 var player;
 var mobs;
 var stars;
+var mobgrenades;
 var grenades;
 var bombs;
 var explosion;
+var mobexplosion;
 var platforms;
 var walls;
 var score = 0;
@@ -20,6 +22,7 @@ var restartText;
 var mainmenuText;
 
 // Layers
+// var timedEvent;
 // const layerBackground = this.add.layer();
 
 // Controls
@@ -104,6 +107,13 @@ export class Game extends Scene
         });
 
         this.anims.create({
+            key: 'explosionMob',
+            frames: this.anims.generateFrameNumbers('explosionMob', { start: 1, end: 15 }),
+            frameRate: 60,
+            repeat: 0
+        });
+
+        this.anims.create({
             key: 'mobmoveright',
             frames: this.anims.generateFrameNumbers('mob', { start: 5, end: 8 }),
             frameRate: 15,
@@ -124,6 +134,10 @@ export class Game extends Scene
         const pointerDownHandler = function(pointer) {
             if (functionEnabled) {
                 shootGrenade.call(this, pointer.x, pointer.y);
+                
+                setTimeout(() => {
+                    mobShoot.call(this, player.x, player.y);
+                }, 500); 
                 
                 functionEnabled = false;
                 
@@ -157,9 +171,17 @@ export class Game extends Scene
 
         grenades = this.physics.add.group();
 
+        mobgrenades = this.physics.add.group();
+
         explosion = this.physics.add.sprite(100, 100, 'explosion')
         explosion.setScale(5);
         explosion.setVisible(false);
+        explosion.disableBody(true, true);
+
+        mobexplosion = this.physics.add.sprite(100, 100, 'explosion')
+        mobexplosion.setScale(3);
+        mobexplosion.setVisible(false);
+        mobexplosion.disableBody(true, true);
 
         bombs = this.physics.add.group();
 
@@ -171,6 +193,8 @@ export class Game extends Scene
         this.physics.add.collider(bombs, platforms);
         this.physics.add.collider(grenades, platforms);
         this.physics.add.collider(explosion, platforms);
+        this.physics.add.collider(mobgrenades, platforms);
+        this.physics.add.collider(mobexplosion, platforms);
 
         this.physics.add.collider(player, walls);
         this.physics.add.collider(mobs, walls);
@@ -178,6 +202,8 @@ export class Game extends Scene
         this.physics.add.collider(bombs, walls);
         this.physics.add.collider(grenades, walls);
         this.physics.add.collider(explosion, walls);
+        this.physics.add.collider(mobgrenades, walls);
+        this.physics.add.collider(mobexplosion, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
 
@@ -188,6 +214,10 @@ export class Game extends Scene
         this.physics.add.overlap(explosion, stars, killStar, null, this);
 
         this.physics.add.collider(player, bombs, hitBomb, null, this);
+
+        this.physics.add.collider(player, mobexplosion, hitBomb, null, this);
+
+        // this.timedEvent = this.time.addEvent({ delay: 500, callback: this.mobShoot, callbackScope: this, loop: true });
 
         function collectStar (player, star)
         {
@@ -285,6 +315,29 @@ export class Game extends Scene
             }, 1500);
         }
 
+        function mobShoot(x, y) {
+            const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
+            mobgrenade.setOrigin(0, 0);
+            mobgrenades.add(mobgrenade);
+            this.physics.moveTo(mobgrenade, x, y, 800);
+            mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+            mobgrenade.body.setGravityY(200);
+            mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+            setTimeout(function() {
+                mobexplosion.setPosition(mobgrenade.x, mobgrenade.y);
+                mobexplosion.setOrigin(0.5, 0.5);
+                mobexplosion.setVisible(true);
+                mobexplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
+                mobexplosion.anims.play('explosionMob');
+                mobexplosion.body.setAllowGravity(false);
+                mobgrenade.setVisible(false);
+                setTimeout(function() {
+                    mobexplosion.setVisible(false);
+                    mobexplosion.disableBody(true, true);
+                }, 300);
+            }, 750);   
+        }
+    
         function hitBomb (player, bomb)
         {
             this.physics.pause();

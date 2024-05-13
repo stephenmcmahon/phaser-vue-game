@@ -44,6 +44,7 @@ export class Preloader extends Scene
         this.load.image('star', 'star.png');
         this.load.image('bomb', 'bomb.png');
         this.load.image('grenade', 'grenade.png');
+        this.load.image('grenadeMob', 'grenade-mob.png');
         this.load.spritesheet('dude',
             'dude.png',
             { frameWidth: 48, frameHeight: 96 }
@@ -54,6 +55,10 @@ export class Preloader extends Scene
         );
         this.load.spritesheet('explosion',
             'explosion.png',
+            { frameWidth: 50, frameHeight: 50 }
+        );
+        this.load.spritesheet('explosionMob',
+            'explosion-mob.png',
             { frameWidth: 50, frameHeight: 50 }
         );
     }
