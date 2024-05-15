@@ -7,19 +7,21 @@ var crosshair;
 var player;
 var mobs;
 var stars;
-var mobgrenades;
+var mobGrenades;
 var grenades;
 var bombs;
 var explosion;
-var mobexplosion;
+var mobExplosion;
 var platforms;
 var walls;
 var score = 0;
+var level = 1;
 var pointsCollected = 0;
 var mobsKilled = 0;
 var bombsKilled = 0;
 var gameOver = false;
 var scoreText;
+var levelText;
 var restartText;
 var mainmenuText;
 
@@ -44,8 +46,11 @@ export class Game extends Scene
     create ()
     {
         score = 0;
-
         pointsCollected = 0;
+        mobsKilled = 0;
+        bombsKilled = 0;
+
+        level = 1;
 
         pointer = this.input.activePointer;
 
@@ -126,14 +131,14 @@ export class Game extends Scene
         this.anims.create({
             key: 'mobmoveright',
             frames: this.anims.generateFrameNumbers('mob', { start: 5, end: 8 }),
-            frameRate: 15,
+            frameRate: 2,
             repeat: -1
         });
 
         this.anims.create({
             key: 'mobmoveleft',
             frames: this.anims.generateFrameNumbers('mob', { start: 0, end: 3 }),
-            frameRate: 15,
+            frameRate: 2,
             repeat: -1
         });
 
@@ -181,21 +186,23 @@ export class Game extends Scene
 
         grenades = this.physics.add.group();
 
-        mobgrenades = this.physics.add.group();
+        mobGrenades = this.physics.add.group();
 
         explosion = this.physics.add.sprite(100, 100, 'explosion')
         explosion.setScale(5);
         explosion.setVisible(false);
         explosion.disableBody(true, true);
 
-        mobexplosion = this.physics.add.sprite(100, 100, 'explosion')
-        mobexplosion.setScale(3);
-        mobexplosion.setVisible(false);
-        mobexplosion.disableBody(true, true);
+        mobExplosion = this.physics.add.sprite(100, 100, 'explosion')
+        mobExplosion.setScale(3);
+        mobExplosion.setVisible(false);
+        mobExplosion.disableBody(true, true);
 
         bombs = this.physics.add.group();
 
         scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontSize: '32px', fill: '#fff' });
+
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -203,8 +210,8 @@ export class Game extends Scene
         this.physics.add.collider(bombs, platforms);
         this.physics.add.collider(grenades, platforms);
         this.physics.add.collider(explosion, platforms);
-        this.physics.add.collider(mobgrenades, platforms);
-        this.physics.add.collider(mobexplosion, platforms);
+        this.physics.add.collider(mobGrenades, platforms);
+        this.physics.add.collider(mobExplosion, platforms);
 
         this.physics.add.collider(player, walls);
         this.physics.add.collider(mobs, walls);
@@ -212,8 +219,8 @@ export class Game extends Scene
         this.physics.add.collider(bombs, walls);
         this.physics.add.collider(grenades, walls);
         this.physics.add.collider(explosion, walls);
-        this.physics.add.collider(mobgrenades, walls);
-        this.physics.add.collider(mobexplosion, walls);
+        this.physics.add.collider(mobGrenades, walls);
+        this.physics.add.collider(mobExplosion, walls);
 
         this.physics.add.overlap(player, stars, collectStar, null, this);
 
@@ -225,7 +232,11 @@ export class Game extends Scene
 
         this.physics.add.collider(player, bombs, hitBomb, null, this);
 
-        this.physics.add.collider(player, mobexplosion, hitBomb, null, this);
+        this.physics.add.collider(player, mobExplosion, hitBomb, null, this);
+
+        this.physics.add.collider(player, mobs, hitBomb, null, this);
+
+        this.physics.add.collider(mobs, mobExplosion, killMob, null, this);
 
         // this.timedEvent = this.time.addEvent({ delay: 500, callback: this.mobShoot, callbackScope: this, loop: true });
 
@@ -249,6 +260,8 @@ export class Game extends Scene
 
             if (stars.countActive(true) === 0)
             {
+                level += 1;
+                levelText.setText('Level: ' + level);
                 stars.children.iterate(function (child) {
                     child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
                     child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
@@ -291,6 +304,8 @@ export class Game extends Scene
             scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (stars.countActive(true) === 0)
             {
+                level += 1;
+                levelText.setText('Level: ' + level);
                 stars.children.iterate(function (child) {
                     child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
                     child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
@@ -330,22 +345,22 @@ export class Game extends Scene
         function mobShoot(x, y) {
             const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
             mobgrenade.setOrigin(0, 0);
-            mobgrenades.add(mobgrenade);
+            mobGrenades.add(mobgrenade);
             this.physics.moveTo(mobgrenade, x, y, 800);
             mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
             mobgrenade.body.setGravityY(200);
             mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
             setTimeout(function() {
-                mobexplosion.setPosition(mobgrenade.x, mobgrenade.y);
-                mobexplosion.setOrigin(0.5, 0.5);
-                mobexplosion.setVisible(true);
-                mobexplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
-                mobexplosion.anims.play('explosionMob');
-                mobexplosion.body.setAllowGravity(false);
+                mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
+                mobExplosion.setOrigin(0.5, 0.5);
+                mobExplosion.setVisible(true);
+                mobExplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
+                mobExplosion.anims.play('explosionMob');
+                mobExplosion.body.setAllowGravity(false);
                 mobgrenade.setVisible(false);
                 setTimeout(function() {
-                    mobexplosion.setVisible(false);
-                    mobexplosion.disableBody(true, true);
+                    mobExplosion.setVisible(false);
+                    mobExplosion.disableBody(true, true);
                 }, 300);
             }, 750);   
         }
@@ -437,7 +452,7 @@ export class Game extends Scene
 
             player.anims.play('turn');
         }
-        if (wKey.isDown && player.body.touching.down)
+        if (Phaser.Input.Keyboard.JustDown(wKey) && player.body.touching.down)
         {
             player.setVelocityY(-900);
         }
@@ -454,7 +469,7 @@ export class Game extends Scene
             }
             else
             {
-                child.anims.play('mobmoveleft', true);
+                child.anims.play('mobmoveright', true);
             }
             if (gameOver === true) {
                 child.anims.play('mobturn', true);
