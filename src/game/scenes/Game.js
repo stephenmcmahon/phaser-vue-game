@@ -16,6 +16,8 @@ var platforms;
 var walls;
 var score = 0;
 var pointsCollected = 0;
+var mobsKilled = 0;
+var bombsKilled = 0;
 var gameOver = false;
 var scoreText;
 var restartText;
@@ -46,6 +48,8 @@ export class Game extends Scene
         pointsCollected = 0;
 
         pointer = this.input.activePointer;
+
+        gameOver = false;
 
         // this.cameras.main.setBackgroundColor(0x00ff00);
 
@@ -111,6 +115,12 @@ export class Game extends Scene
             frames: this.anims.generateFrameNumbers('explosionMob', { start: 1, end: 15 }),
             frameRate: 60,
             repeat: 0
+        });
+
+        this.anims.create({
+          key: 'mobturn',
+          frames: [ { key: 'mob', frame: 4 } ],
+          frameRate: 5
         });
 
         this.anims.create({
@@ -185,7 +195,7 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(70, 30, 'Score: ' + score + 'Points Collected: ' + pointsCollected, { fontSize: '32px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -235,7 +245,7 @@ export class Game extends Scene
               score += 7;
             }
 
-            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
+            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
 
             if (stars.countActive(true) === 0)
             {
@@ -255,8 +265,9 @@ export class Game extends Scene
         function killMob (explosion, mob)
         {
             mob.disableBody(true, true);
+            mobsKilled += 1;
             score += 5;
-            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
+            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (mobs.countActive(true) === 0)
             {
                 mobs.children.iterate(function (child) {
@@ -267,8 +278,9 @@ export class Game extends Scene
 
         function killBomb (explosion, bomb)
         {
+            bombsKilled += 1;
             score += 7;
-            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected);
+            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             bomb.disableBody(true, true);
         }
 
@@ -276,7 +288,7 @@ export class Game extends Scene
         {
             star.disableBody(true, true);
             score -= 1;
-            scoreText.setText('Score: ' + score + 'Points Collected: ' + pointsCollected); 
+            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (stars.countActive(true) === 0)
             {
                 stars.children.iterate(function (child) {
@@ -444,7 +456,9 @@ export class Game extends Scene
             {
                 child.anims.play('mobmoveleft', true);
             }
-            
+            if (gameOver === true) {
+                child.anims.play('mobturn', true);
+            }
         });     
     }
 
