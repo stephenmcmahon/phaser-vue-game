@@ -343,26 +343,73 @@ export class Game extends Scene
         }
 
         function mobShoot(x, y) {
-            const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
-            mobgrenade.setOrigin(0, 0);
-            mobGrenades.add(mobgrenade);
-            this.physics.moveTo(mobgrenade, x, y, 800);
-            mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
-            mobgrenade.body.setGravityY(200);
-            mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
-            setTimeout(function() {
-                mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
-                mobExplosion.setOrigin(0.5, 0.5);
-                mobExplosion.setVisible(true);
-                mobExplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
-                mobExplosion.anims.play('explosionMob');
-                mobExplosion.body.setAllowGravity(false);
-                mobgrenade.setVisible(false);
-                setTimeout(function() {
-                    mobExplosion.setVisible(false);
-                    mobExplosion.disableBody(true, true);
-                }, 300);
-            }, 750);   
+            if (y > 600) {
+              const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
+              mobgrenade.setOrigin(0, 0);
+              mobGrenades.add(mobgrenade);
+              this.physics.moveTo(mobgrenade, x, y, 800);
+              mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+              mobgrenade.body.setGravityY(200);
+              mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              setTimeout(function() {
+                  mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
+                  mobExplosion.setOrigin(0.5, 0.5);
+                  mobExplosion.setVisible(true);
+                  mobExplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
+                  mobExplosion.anims.play('explosionMob');
+                  mobExplosion.body.setAllowGravity(false);
+                  mobgrenade.setVisible(false);
+                  setTimeout(function() {
+                      mobExplosion.setVisible(false);
+                      mobExplosion.disableBody(true, true);
+                  }, 300);
+              }, 1750);   
+            } 
+            else if (y > 248){
+              const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
+              mobgrenade.setOrigin(0, 0);
+              mobGrenades.add(mobgrenade);
+              this.physics.moveTo(mobgrenade, x, y, 800);
+              mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+              mobgrenade.body.setGravityY(200);
+              mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              setTimeout(function() {
+                  mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
+                  mobExplosion.setOrigin(0.5, 0.5);
+                  mobExplosion.setVisible(true);
+                  mobExplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
+                  mobExplosion.anims.play('explosionMob');
+                  mobExplosion.body.setAllowGravity(false);
+                  mobgrenade.setVisible(false);
+                  setTimeout(function() {
+                      mobExplosion.setVisible(false);
+                      mobExplosion.disableBody(true, true);
+                  }, 300);
+              }, 750);   
+            }
+            else {
+              const mobgrenade = this.physics.add.image(600, 0, 'grenadeMob');
+              mobgrenade.setOrigin(0, 0);
+              mobGrenades.add(mobgrenade);
+              this.physics.moveTo(mobgrenade, x, y, 800);
+              mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
+              mobgrenade.body.setGravityY(200);
+              mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              setTimeout(function() {
+                  mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
+                  mobExplosion.setOrigin(0.5, 0.5);
+                  mobExplosion.setVisible(true);
+                  mobExplosion.enableBody(true, mobgrenade.x, mobgrenade.y, true, true);
+                  mobExplosion.anims.play('explosionMob');
+                  mobExplosion.body.setAllowGravity(false);
+                  mobgrenade.setVisible(false);
+                  setTimeout(function() {
+                      mobExplosion.setVisible(false);
+                      mobExplosion.disableBody(true, true);
+                  }, 300);
+              }, 350);   
+            }
+            
         }
     
         function hitBomb (player, bomb)
@@ -372,15 +419,16 @@ export class Game extends Scene
             player.anims.play('turn');
             gameOver = true;
             if (gameOver === true) {
-                this.add.text(600, 200, 'Score:', { 
+
+                this.add.text(600, 200, 'Level:\n' + level, { 
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000',astrokeThickness: 8,
                     align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
-                this.add.text(600, 300, score, { 
+                this.add.text(600, 300, 'Score:\n' + score, { 
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000', strokeThickness: 8,
+                    stroke: '#000000',astrokeThickness: 8,
                     align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
