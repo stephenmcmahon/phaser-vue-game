@@ -236,7 +236,7 @@ export class Game extends Scene
 
         this.physics.add.collider(player, mobs, hitBomb, null, this);
 
-        this.physics.add.collider(mobs, mobExplosion, killMob, null, this);
+        this.physics.add.collider(mobExplosion, mobs, killMob, null, this);
 
         // this.timedEvent = this.time.addEvent({ delay: 500, callback: this.mobShoot, callbackScope: this, loop: true });
 
