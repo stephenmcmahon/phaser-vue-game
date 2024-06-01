@@ -510,7 +510,7 @@ export class Game extends Scene
         }
 
         mobs.children.iterate(function (child) {
-            child.setVelocityX(Phaser.Math.Between(-30, 30));
+            child.setVelocityX(Phaser.Math.Between(-130, 130));
             if (child.body.velocity.x > 0)
             {
                 child.anims.play('mobmoveright', true);
