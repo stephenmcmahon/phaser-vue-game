@@ -5,8 +5,10 @@ import { Scene } from 'phaser';
 var pointer;
 var crosshair;
 var player;
+var grenadeLauncher;
 var mobs;
 var stars;
+var mobLauncher;
 var mobGrenades;
 var grenades;
 var bombs;
@@ -15,6 +17,7 @@ var mobExplosion;
 var platforms;
 var walls;
 var score = 0;
+var totalScore = 0;
 var level = 1;
 var pointsCollected = 0;
 var mobsKilled = 0;
@@ -26,6 +29,8 @@ var restartText;
 var mainmenuText;
 
 // Layers
+var target = 0;
+var rotationSpeed = 0;
 // var timedEvent;
 // const layerBackground = this.add.layer();
 
@@ -54,6 +59,9 @@ export class Game extends Scene
 
         pointer = this.input.activePointer;
 
+        target = 0;
+        rotationSpeed = 1 * Math.PI;
+
         gameOver = false;
 
         // this.cameras.main.setBackgroundColor(0x00ff00);
@@ -75,6 +83,12 @@ export class Game extends Scene
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.body.setGravityY(1000);
+
+        grenadeLauncher = this.add.image(player.x, player.y, 'grenadeLauncher');
+        grenadeLauncher.setOrigin(0.5, 0);
+
+        mobLauncher = this.add.image(600, 50, 'mobLauncher')
+        mobLauncher.setScale(1.5);
  
         this.anims.create({
             key: 'left',
@@ -145,6 +159,12 @@ export class Game extends Scene
         aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
+        const pointerMoverHandler = function(pointer) {
+            target = Phaser.Math.Angle.BetweenPoints(mobLauncher, pointer);
+        }
+
+        this.input.on('pointermove', pointerMoverHandler, this);
 
         const pointerDownHandler = function(pointer) {
             if (functionEnabled) {
@@ -414,19 +434,26 @@ export class Game extends Scene
     
         function hitBomb (player, bomb)
         {
+            totalScore = score * level / 2;
             this.physics.pause();
             player.setTint(0xff0000);
             player.anims.play('turn');
             gameOver = true;
             if (gameOver === true) {
 
-                this.add.text(600, 200, 'Level:\n' + level, { 
+                this.add.text(600, 100, 'Level:\n' + level, { 
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000',astrokeThickness: 8,
                     align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
-                this.add.text(600, 300, 'Score:\n' + score, { 
+                this.add.text(600, 200, 'Score:\n' + score, { 
+                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+                    stroke: '#000000',astrokeThickness: 8,
+                    align: 'center' 
+                }).setDepth(1).setOrigin(0.5);
+
+                this.add.text(600, 300, 'Total Score:\n' + totalScore, { 
                     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
                     stroke: '#000000',astrokeThickness: 8,
                     align: 'center' 
@@ -509,15 +536,25 @@ export class Game extends Scene
             crosshair.setPosition(pointer.x, pointer.y);
         }
 
+        grenadeLauncher.setPosition(player.x, player.y);
+        grenadeLauncher.rotation = target * 0.5;
+
+        mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target * 0.5, rotationSpeed * 0.005);
+        
         mobs.children.iterate(function (child) {
-            child.setVelocityX(Phaser.Math.Between(-130, 130));
+            if (player.x > 600) {
+                child.setVelocityX(Phaser.Math.Between(75, 125));
+            }
+            else {
+                child.setVelocityX(Phaser.Math.Between(-75, -125));
+            }
             if (child.body.velocity.x > 0)
             {
                 child.anims.play('mobmoveright', true);
             }
             else
             {
-                child.anims.play('mobmoveright', true);
+                child.anims.play('mobmoveleft', true);
             }
             if (gameOver === true) {
                 child.anims.play('mobturn', true);
