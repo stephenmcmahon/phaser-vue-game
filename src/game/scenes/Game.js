@@ -30,6 +30,7 @@ var mainmenuText;
 
 // Layers
 var target = 0;
+var playerTarget = 0;
 var rotationSpeed = 0;
 // var timedEvent;
 // const layerBackground = this.add.layer();
@@ -162,6 +163,7 @@ export class Game extends Scene
 
         const pointerMoverHandler = function(pointer) {
             target = Phaser.Math.Angle.BetweenPoints(mobLauncher, pointer);
+            playerTarget = Phaser.Math.Angle.BetweenPoints(grenadeLauncher, pointer);
         }
 
         this.input.on('pointermove', pointerMoverHandler, this);
@@ -278,18 +280,23 @@ export class Game extends Scene
 
             if (stars.countActive(true) === 0)
             {
-                level += 1;
-                levelText.setText('Level: ' + level);
-                stars.children.iterate(function (child) {
-                    child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
-                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
-                });
-                var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-                var bomb = bombs.create(x, 16, 'bomb');
-                bomb.setBounce(1);
-                bomb.setCollideWorldBounds(true);
-                bomb.setVelocity(Phaser.Math.Between(-600, 600), 20);
-                bomb.allowGravity = false;
+                setTimeout(() => {
+                    level += 1;
+                    levelText.setText('Level: ' + level);
+                    stars.children.iterate(function (child) {
+                        child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
+                        child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+                    });
+                    var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+                    bombs.createMultiple({key: 'bomb', frame: [0], frameQuantity: 1, repeat: level / 2 | 0 });
+                    Phaser.Actions.SetXY(bombs.getChildren(), x, 0, x);
+                    bombs.children.iterate(function (child) {
+                        child.setBounce(1);
+                        child.setCollideWorldBounds(true);
+                        child.setVelocity(Phaser.Math.Between(-600, 600), 20);
+                        child.allowGravity = false;
+                    });
+                }, 1000); 
             }
         }
 
@@ -301,9 +308,11 @@ export class Game extends Scene
             scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (mobs.countActive(true) === 0)
             {
-                mobs.children.iterate(function (child) {
-                    child.enableBody(true, Phaser.Math.Between(50, 1150), 150, true, true);
-                });
+                setTimeout(() => {
+                    mobs.children.iterate(function (child) {
+                        child.enableBody(true, Phaser.Math.Between(50, 1150), 150, true, true);
+                    });
+                }, 1000); 
             }
         }
 
@@ -322,18 +331,23 @@ export class Game extends Scene
             scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (stars.countActive(true) === 0)
             {
-                level += 1;
-                levelText.setText('Level: ' + level);
-                stars.children.iterate(function (child) {
-                    child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
-                    child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
-                });
-                var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-                var bomb = bombs.create(x, 16, 'bomb');
-                bomb.setBounce(1);
-                bomb.setCollideWorldBounds(true);
-                bomb.setVelocity(Phaser.Math.Between(-600, 600), 20);
-                bomb.allowGravity = false;
+                setTimeout(() => {
+                    level += 1;
+                    levelText.setText('Level: ' + level);
+                    stars.children.iterate(function (child) {
+                        child.enableBody(true, Phaser.Math.Between(150, 1050), 150, true, true);
+                        child.setVelocity(Phaser.Math.FloatBetween(Phaser.Math.Between(-500, 500), 0));
+                    });
+                    var x = (player.x < 0) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+                    bombs.createMultiple({key: 'bomb', frame: [0], frameQuantity: 1, repeat: level / 2 | 0 });
+                    Phaser.Actions.SetXY(bombs.getChildren(), x, 0, x);
+                    bombs.children.iterate(function (child) {
+                        child.setBounce(1);
+                        child.setCollideWorldBounds(true);
+                        child.setVelocity(Phaser.Math.Between(-600, 600), 20);
+                        child.allowGravity = false;
+                    });
+                }, 1000); 
             }
         }
 
@@ -535,7 +549,7 @@ export class Game extends Scene
         }
 
         grenadeLauncher.setPosition(player.x, player.y);
-        grenadeLauncher.rotation = target;
+        grenadeLauncher.rotation = Phaser.Math.Angle.RotateTo(grenadeLauncher.rotation, playerTarget, rotationSpeed * 0.5);
 
         mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.005);
         
