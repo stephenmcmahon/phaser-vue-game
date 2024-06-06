@@ -85,7 +85,7 @@ export class Game extends Scene
         player.body.setGravityY(1000);
 
         grenadeLauncher = this.add.image(player.x, player.y, 'grenadeLauncher');
-        grenadeLauncher.setOrigin(0.5, 0);
+        grenadeLauncher.setOrigin(0.5, 0.75);
 
         mobLauncher = this.add.image(600, 50, 'mobLauncher')
         mobLauncher.setScale(1.5);
@@ -171,7 +171,7 @@ export class Game extends Scene
                 shootGrenade.call(this, pointer.x, pointer.y);
                 
                 setTimeout(() => {
-                    mobShoot.call(this, player.x, player.y);
+                    mobShoot.call(this, pointer.x, pointer.y);
                 }, 500); 
                 
                 functionEnabled = false;
@@ -257,8 +257,6 @@ export class Game extends Scene
         this.physics.add.collider(player, mobs, hitBomb, null, this);
 
         this.physics.add.collider(mobExplosion, mobs, killMob, null, this);
-
-        // this.timedEvent = this.time.addEvent({ delay: 500, callback: this.mobShoot, callbackScope: this, loop: true });
 
         function collectStar (player, star)
         {
@@ -434,7 +432,7 @@ export class Game extends Scene
     
         function hitBomb (player, bomb)
         {
-            totalScore = score * level / 2;
+            totalScore = score * level / 2 | 0;
             this.physics.pause();
             player.setTint(0xff0000);
             player.anims.play('turn');
@@ -537,9 +535,9 @@ export class Game extends Scene
         }
 
         grenadeLauncher.setPosition(player.x, player.y);
-        grenadeLauncher.rotation = target * 0.5;
+        grenadeLauncher.rotation = target;
 
-        mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target * 0.5, rotationSpeed * 0.005);
+        mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.005);
         
         mobs.children.iterate(function (child) {
             if (player.x > 600) {
