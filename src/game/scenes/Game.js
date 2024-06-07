@@ -554,12 +554,13 @@ export class Game extends Scene
         mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.005);
         
         mobs.children.iterate(function (child) {
-            if (player.x > 600) {
+            if (player.x > child.x) {
                 child.setVelocityX(Phaser.Math.Between(75, 125));
             }
             else {
                 child.setVelocityX(Phaser.Math.Between(-75, -125));
             }
+            
             if (child.body.velocity.x > 0)
             {
                 child.anims.play('mobmoveright', true);
@@ -571,7 +572,7 @@ export class Game extends Scene
             if (gameOver === true) {
                 child.anims.play('mobturn', true);
             }
-        });     
+        });   
     }
 
     changeScene ()
