@@ -12,7 +12,7 @@ const config = {
     width: 1200,
     height: 800,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#0d0d0d',
     physics: {
         default: 'arcade',
         arcade: {
