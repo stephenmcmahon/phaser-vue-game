@@ -21,25 +21,25 @@ export class MainMenu extends Scene
         this.logo = this.add.image(600, 300, 'logo').setDepth(1);
 
         this.add.text(600, 365, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 24, color: '#ffffff',
+            fontFamily: 'Courier New', fontSize: 24, color: '#ffffff',
             stroke: '#000000', strokeThickness: 0,
             align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         playText = this.add.text(600, 500, 'Play Game', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setDepth(1).setOrigin(0.5);
         playText.setInteractive();
         playText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Arial Black', fontSize: 52, color: '#2deeee',
+            var hoverStyle = { fontFamily: 'Courier New', fontSize: 52, color: '#2deeee',
             stroke: '#000000', strokeThickness: 8,
             align: 'center' }; 
             playText.setStyle(hoverStyle);
         });
         playText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            var defaultStyle = { fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center' }; 
             playText.setStyle(defaultStyle);
@@ -49,19 +49,19 @@ export class MainMenu extends Scene
         });
 
         howToPlayText = this.add.text(600, 575, 'How To Play', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setDepth(1).setOrigin(0.5);
         howToPlayText.setInteractive();
         howToPlayText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Arial Black', fontSize: 52, color: '#2deeee',
+            var hoverStyle = { fontFamily: 'Courier New', fontSize: 52, color: '#2deeee',
             stroke: '#000000', strokeThickness: 8,
             align: 'center' }; 
             howToPlayText.setStyle(hoverStyle);
         });
         howToPlayText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            var defaultStyle = { fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center' }; 
             howToPlayText.setStyle(defaultStyle);
