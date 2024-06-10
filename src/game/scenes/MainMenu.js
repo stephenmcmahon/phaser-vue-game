@@ -16,55 +16,53 @@ export class MainMenu extends Scene
 
     create ()
     {
-        this.add.image(600, 400, 'background').setAlpha(0.75);
+        // this.add.image(600, 400, 'background').setAlpha(0.75);
 
         this.logo = this.add.image(600, 300, 'logo').setDepth(1);
 
-        this.add.text(600, 365, 'Main Menu', {
-            fontFamily: 'Courier New', fontSize: 24, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 0,
-            align: 'center'
+        this.add.text(600, 355, '(Grenade Zero)', {
+            fontFamily: 'Pixelify Sans', fontSize: 16, color: '#f2e206', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
-        playText = this.add.text(600, 500, 'Play Game', {
-            fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
+        this.add.text(600, 495, 'Main Menu', {
+            fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f28b05', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        playText = this.add.text(600, 600, 'Play Game', {
+            fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
         playText.setInteractive();
         playText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Courier New', fontSize: 52, color: '#2deeee',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, color: '#f2cb04', align: 'center' }; 
             playText.setStyle(hoverStyle);
+            finger.setScale(1.5);
+            finger.setTint(0xf2e206);
         });
         playText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center' }; 
+            var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
             playText.setStyle(defaultStyle);
+            finger.setScale(1);
+            finger.setTint(0xffffff);
         });
         playText.on('pointerdown', function() {
             this.scene.changeScene();
         });
 
-        howToPlayText = this.add.text(600, 575, 'How To Play', {
-            fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
+        howToPlayText = this.add.text(600, 655, 'How to Play', {
+            fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
         howToPlayText.setInteractive();
         howToPlayText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Courier New', fontSize: 52, color: '#2deeee',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, color: '#f2cb04', align: 'center' }; 
             howToPlayText.setStyle(hoverStyle);
+            finger.setScale(1.5);
+            finger.setTint(0xf2e206);
         });
         howToPlayText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Courier New', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center' }; 
+            var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
             howToPlayText.setStyle(defaultStyle);
+            finger.setScale(1);
+            finger.setTint(0xffffff);
         });
         howToPlayText.on('pointerdown', function() {
             this.scene.changeHowTo();
