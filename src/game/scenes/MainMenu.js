@@ -33,16 +33,14 @@ export class MainMenu extends Scene
         }).setDepth(1).setOrigin(0.5);
         playText.setInteractive();
         playText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, color: '#f2cb04', align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
             playText.setStyle(hoverStyle);
             finger.setScale(1.5);
-            finger.setTint(0xf2e206);
         });
         playText.on('pointerout', function () {
             var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
             playText.setStyle(defaultStyle);
             finger.setScale(1);
-            finger.setTint(0xffffff);
         });
         playText.on('pointerdown', function() {
             this.scene.changeScene();
@@ -56,19 +54,17 @@ export class MainMenu extends Scene
             var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, color: '#f2cb04', align: 'center' }; 
             howToPlayText.setStyle(hoverStyle);
             finger.setScale(1.5);
-            finger.setTint(0xf2e206);
         });
         howToPlayText.on('pointerout', function () {
             var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
             howToPlayText.setStyle(defaultStyle);
             finger.setScale(1);
-            finger.setTint(0xffffff);
         });
         howToPlayText.on('pointerdown', function() {
             this.scene.changeHowTo();
         });
 
-        finger = this.add.sprite(0, 0, 'cursorMain');
+        finger = this.add.sprite(0, 0, 'cursorGame');
         finger.setDepth(2);
         
         EventBus.emit('current-scene-ready', this);
