@@ -12,10 +12,14 @@ export class HowToPlay extends Scene
 
     create ()
     {
-        // this.add.image(600, 400, 'background').setAlpha(0.5);
+        this.add.image(600, 400, 'backgroundMenu').setAlpha(0.25);
 
         this.add.text(600, 50, 'How To Play', {
             fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(600, 125, 'Welcome to Grenade-0, (Grenade Zero).\n Control your player to collect points, and shoot grenades at the monsters and flying bombs to get a high score.', {
+            fontFamily: 'Pixelify Sans', fontSize: 18, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         menuText = this.add.text(600, 750, 'Back to Main Menu', {
