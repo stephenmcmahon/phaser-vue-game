@@ -67,7 +67,7 @@ export class Game extends Scene
 
         // this.cameras.main.setBackgroundColor(0x00ff00);
 
-        this.add.image(600, 400, 'backgroundGame');
+        this.add.image(600, 400, 'backgroundMenu');
 
         platforms = this.physics.add.staticGroup();
         platforms.create(600, -10, 'ground');
@@ -222,9 +222,9 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontSize: '32px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
 
-        levelText = this.add.text(600, 30, 'Level: ' + level, { fontSize: '32px', fill: '#fff' });
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -454,45 +454,53 @@ export class Game extends Scene
             if (gameOver === true) {
 
                 this.add.text(600, 100, 'Level:\n' + level, { 
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000',astrokeThickness: 8,
-                    align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
                 this.add.text(600, 200, 'Score:\n' + score, { 
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000',astrokeThickness: 8,
-                    align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
                 this.add.text(600, 300, 'Total Score:\n' + totalScore, { 
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000',astrokeThickness: 8,
-                    align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
                 }).setDepth(1).setOrigin(0.5);
 
                 this.add.text(600, 400, 'Game Over', {
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000', strokeThickness: 8,
-                    align: 'center'
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(1).setOrigin(0.5);
 
                 restartText = this.add.text(600, 450, 'Restart', {
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000', strokeThickness: 8,
-                    align: 'center'
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(1).setOrigin(0.5);
                 restartText.setInteractive();
+                restartText.on('pointerover', function() {
+                    var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+                    restartText.setStyle(hoverStyle);
+                    crosshair.setScale(1.5);
+                });
+                restartText.on('pointerout', function () {
+                    var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+                    restartText.setStyle(defaultStyle);
+                    crosshair.setScale(1);
+                });
                 restartText.on('pointerdown', function() {
                     this.scene.restartScene();
                 });
                 
                 mainmenuText = this.add.text(600, 500, 'Main Menu', {
-                    fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-                    stroke: '#000000', strokeThickness: 8,
-                    align: 'center'
+                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(1).setOrigin(0.5);
                 mainmenuText.setInteractive();
+                mainmenuText.on('pointerover', function() {
+                    var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+                    mainmenuText.setStyle(hoverStyle);
+                    crosshair.setScale(1.5);
+                });
+                mainmenuText.on('pointerout', function () {
+                    var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+                    mainmenuText.setStyle(defaultStyle);
+                    crosshair.setScale(1);
+                });
                 mainmenuText.on('pointerdown', function() {
                     this.scene.changeScene();
                 });
