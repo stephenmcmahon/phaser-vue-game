@@ -224,7 +224,7 @@ export class Game extends Scene
 
         scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
 
-        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', dddddfontSize: '32px', fill: '#fff' });
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -568,7 +568,7 @@ export class Game extends Scene
             else {
                 child.setVelocityX(Phaser.Math.Between(-75, -125));
             }
-            
+
             if (child.body.velocity.x > 0)
             {
                 child.anims.play('mobmoveright', true);
@@ -577,6 +577,7 @@ export class Game extends Scene
             {
                 child.anims.play('mobmoveleft', true);
             }
+
             if (gameOver === true) {
                 child.anims.play('mobturn', true);
             }
