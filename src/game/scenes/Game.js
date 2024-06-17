@@ -295,6 +295,7 @@ export class Game extends Scene
                         child.setCollideWorldBounds(true);
                         child.setVelocity(Phaser.Math.Between(-600, 600), 20);
                         child.allowGravity = false;
+                        child.postFX.addGlow(0xff0000, 1, 1, false, 0.1, 32);
                     });
                 }, 1000); 
             }
@@ -346,6 +347,7 @@ export class Game extends Scene
                         child.setCollideWorldBounds(true);
                         child.setVelocity(Phaser.Math.Between(-600, 600), 20);
                         child.allowGravity = false;
+                        child.postFX.addGlow(0xff0000, 1, 1, false, 0.1, 32);
                     });
                 }, 1000); 
             }
