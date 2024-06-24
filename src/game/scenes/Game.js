@@ -89,6 +89,7 @@ export class Game extends Scene
         grenadeLauncher.setOrigin(0.5, 0.75);
 
         mobLauncher = this.add.image(600, 50, 'mobLauncher')
+        mobLauncher.setDepth(2);
         mobLauncher.setScale(1.5);
  
         this.anims.create({
@@ -224,7 +225,8 @@ export class Game extends Scene
 
         scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
 
-        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', dddddfontSize: '32px', fill: '#fff' });
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
+        levelText.setDepth(2);
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -295,7 +297,6 @@ export class Game extends Scene
                         child.setCollideWorldBounds(true);
                         child.setVelocity(Phaser.Math.Between(-600, 600), 20);
                         child.allowGravity = false;
-                        child.postFX.addGlow(0xff0000, 1, 1, false, 0.1, 32);
                     });
                 }, 1000); 
             }
@@ -347,7 +348,6 @@ export class Game extends Scene
                         child.setCollideWorldBounds(true);
                         child.setVelocity(Phaser.Math.Between(-600, 600), 20);
                         child.allowGravity = false;
-                        child.postFX.addGlow(0xff0000, 1, 1, false, 0.1, 32);
                     });
                 }, 1000); 
             }
@@ -361,6 +361,7 @@ export class Game extends Scene
             grenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
             grenade.body.setGravityY(200);
             grenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+            grenade.rotation += Phaser.Math.Between(0.1, 0.9);
             setTimeout(function() {
                 explosion.setPosition(grenade.x, grenade.y);
                 explosion.setOrigin(0.5, 0.5);
@@ -457,19 +458,19 @@ export class Game extends Scene
 
                 this.add.text(600, 100, 'Level:\n' + level, { 
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(2).setOrigin(0.5);
 
                 this.add.text(600, 200, 'Score:\n' + score, { 
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(2).setOrigin(0.5);
 
                 this.add.text(600, 300, 'Total Score:\n' + totalScore, { 
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(2).setOrigin(0.5);
 
                 this.add.text(600, 400, 'Game Over', {
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(2).setOrigin(0.5);
 
                 restartText = this.add.text(600, 450, 'Restart', {
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
@@ -510,7 +511,7 @@ export class Game extends Scene
         }   
 
         crosshair = this.add.sprite(0, 0, 'cursorGame');
-        crosshair.setDepth(2);
+        crosshair.setDepth(3);
 
         EventBus.emit('current-scene-ready', this);
     }
