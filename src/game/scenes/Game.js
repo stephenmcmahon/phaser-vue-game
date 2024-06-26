@@ -386,6 +386,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
@@ -408,6 +409,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
@@ -430,6 +432,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
