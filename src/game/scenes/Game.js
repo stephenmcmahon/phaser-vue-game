@@ -225,8 +225,10 @@ export class Game extends Scene
 
         scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
 
-        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff', align: 'center' });
         levelText.setDepth(2);
+        levelText.setOrigin(0.5);
+       
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(mobs, platforms);
@@ -446,38 +448,55 @@ export class Game extends Scene
                       mobExplosion.disableBody(true, true);
                   }, 300);
               }, 350);   
-            }
-            
+            }    
         }
     
         function hitBomb (player, bomb)
         {
-            totalScore = score * level / 2 | 0;
+            totalScore = score * level / 2 + pointsCollected + mobsKilled + bombsKilled | 0 ;
             this.physics.pause();
             player.setTint(0xff0000);
             player.anims.play('turn');
+            scoreText.setVisible(false);
+            levelText.setVisible(false);
             gameOver = true;
             if (gameOver === true) {
+                this.add.rectangle(600, 400, 1200, 800, 0x8d83dc).setDepth(3).setBlendMode(Phaser.BlendModes.MULTIPLY);
+                this.add.text(600, 75, 'Game Over', {
+                  fontFamily: 'Pixelify Sans', fontSize: 56, color: '#ffffff', align: 'center'
+                }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 100, 'Level:\n' + level, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(2).setOrigin(0.5);
+                this.add.text(600, 150, 'Stats', {
+                  fontFamily: 'Pixelify Sans', fontSize: 48, color: '#ffffff', align: 'center'
+                }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 200, 'Score:\n' + score, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(2).setOrigin(0.5);
+                this.add.text(600, 200, 'Level:\n' + level, { 
+                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 300, 'Total Score:\n' + totalScore, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' 
-                }).setDepth(2).setOrigin(0.5);
+                this.add.text(600, 260, 'Score:\n' + score, { 
+                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 400, 'Game Over', {
+                this.add.text(600, 320, 'Points Collected:\n' + pointsCollected, { 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
+
+                this.add.text(600, 380, 'Mobs Killed:\n' + mobsKilled, { 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
+
+                this.add.text(600, 440, 'Bombs Killed:\n' + bombsKilled, { 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
+
+                this.add.text(600, 520, 'Total Score:\n' + totalScore, { 
+                    fontFamily: 'Pixelify Sans', fontSize: 42, color: '#ffffff', align: 'center' 
+                }).setDepth(3).setOrigin(0.5);
+
+                restartText = this.add.text(600, 625, 'Restart', {
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
-                }).setDepth(2).setOrigin(0.5);
-
-                restartText = this.add.text(600, 450, 'Restart', {
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(3).setOrigin(0.5);
                 restartText.setInteractive();
                 restartText.on('pointerover', function() {
                     var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
@@ -493,9 +512,9 @@ export class Game extends Scene
                     this.scene.restartScene();
                 });
                 
-                mainmenuText = this.add.text(600, 500, 'Main Menu', {
+                mainmenuText = this.add.text(600, 675, 'Main Menu', {
                     fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
-                }).setDepth(1).setOrigin(0.5);
+                }).setDepth(3).setOrigin(0.5);
                 mainmenuText.setInteractive();
                 mainmenuText.on('pointerover', function() {
                     var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
@@ -514,7 +533,7 @@ export class Game extends Scene
         }   
 
         crosshair = this.add.sprite(0, 0, 'cursorGame');
-        crosshair.setDepth(3);
+        crosshair.setDepth(4);
 
         EventBus.emit('current-scene-ready', this);
     }
@@ -565,7 +584,7 @@ export class Game extends Scene
         grenadeLauncher.setPosition(player.x, player.y);
         grenadeLauncher.rotation = Phaser.Math.Angle.RotateTo(grenadeLauncher.rotation, playerTarget, rotationSpeed * 0.5);
 
-        mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.005);
+        mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.006);
         
         mobs.children.iterate(function (child) {
             if (player.x > child.x) {
