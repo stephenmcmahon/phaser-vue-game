@@ -363,7 +363,7 @@ export class Game extends Scene
             grenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
             grenade.body.setGravityY(200);
             grenade.body.setFrictionX(Phaser.Math.Between(5, 6));
-            grenade.rotation += Phaser.Math.Between(0.1, 0.9);
+            grenade.rotation += Phaser.Math.Between(0.1, 5);
             setTimeout(function() {
                 explosion.setPosition(grenade.x, grenade.y);
                 explosion.setOrigin(0.5, 0.5);
@@ -388,7 +388,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
-              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 5);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
@@ -411,7 +411,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
-              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 5);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
@@ -434,7 +434,7 @@ export class Game extends Scene
               mobgrenade.setBounce(Phaser.Math.FloatBetween(0.5, 0.6));
               mobgrenade.body.setGravityY(200);
               mobgrenade.body.setFrictionX(Phaser.Math.Between(5, 6));
-              mobgrenade.rotation += Phaser.Math.Between(0.1, 0.9);
+              mobgrenade.rotation += Phaser.Math.Between(0.1, 5);
               setTimeout(function() {
                   mobExplosion.setPosition(mobgrenade.x, mobgrenade.y);
                   mobExplosion.setOrigin(0.5, 0.5);
@@ -463,35 +463,35 @@ export class Game extends Scene
             if (gameOver === true) {
                 this.add.rectangle(600, 400, 1200, 800, 0x8d83dc).setDepth(3).setBlendMode(Phaser.BlendModes.MULTIPLY);
                 this.add.text(600, 75, 'Game Over', {
-                  fontFamily: 'Pixelify Sans', fontSize: 56, color: '#ffffff', align: 'center'
+                  fontFamily: 'Pixelify Sans', fontSize: 56, color: '#f23839', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 150, 'Stats', {
-                  fontFamily: 'Pixelify Sans', fontSize: 48, color: '#ffffff', align: 'center'
+                  fontFamily: 'Pixelify Sans', fontSize: 48, color: '#f2e206', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 200, 'Level:\n' + level, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 260, 'Score:\n' + score, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 320, 'Points Collected:\n' + pointsCollected, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 380, 'Mobs Killed:\n' + mobsKilled, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 440, 'Bombs Killed:\n' + bombsKilled, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' 
+                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 520, 'Total Score:\n' + totalScore, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 42, color: '#ffffff', align: 'center' 
+                    fontFamily: 'Pixelify Sans', fontSize: 42, color: '#f2e206', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 restartText = this.add.text(600, 625, 'Restart', {
