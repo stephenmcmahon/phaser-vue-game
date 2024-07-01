@@ -223,9 +223,9 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Press Start 2P', fontSize: '32px', fill: '#fff' });
 
-        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Pixelify Sans', fontSize: '32px', fill: '#fff', align: 'center' });
+        levelText = this.add.text(600, 30, 'Level: ' + level, { fontFamily: 'Press Start 2P', fontSize: '32px', fill: '#fff', align: 'center' });
         levelText.setDepth(2);
         levelText.setOrigin(0.5);
        
@@ -463,48 +463,48 @@ export class Game extends Scene
             if (gameOver === true) {
                 this.add.rectangle(600, 400, 1200, 800, 0x8d83dc).setDepth(3).setBlendMode(Phaser.BlendModes.MULTIPLY);
                 this.add.text(600, 75, 'Game Over', {
-                  fontFamily: 'Pixelify Sans', fontSize: 56, color: '#f23839', align: 'center'
+                  fontFamily: 'Press Start 2P', fontSize: 56, fontWeight: 700, color: '#f23839', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 150, 'Stats', {
-                  fontFamily: 'Pixelify Sans', fontSize: 48, color: '#f2e206', align: 'center'
+                  fontFamily: 'Press Start 2P', fontSize: 48, color: '#f2e206', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 200, 'Level:\n' + level, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
+                    fontFamily: 'Press Start 2P', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 260, 'Score:\n' + score, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
+                    fontFamily: 'Press Start 2P', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 320, 'Points Collected:\n' + pointsCollected, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
+                  fontFamily: 'Press Start 2P', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 380, 'Mobs Killed:\n' + mobsKilled, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
+                  fontFamily: 'Press Start 2P', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 440, 'Bombs Killed:\n' + bombsKilled, { 
-                  fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f2cb04', align: 'center' 
+                  fontFamily: 'Press Start 2P', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 this.add.text(600, 520, 'Total Score:\n' + totalScore, { 
-                    fontFamily: 'Pixelify Sans', fontSize: 42, color: '#f2e206', align: 'center' 
+                    fontFamily: 'Press Start 2P', fontSize: 42, color: '#f2e206', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
                 restartText = this.add.text(600, 625, 'Restart', {
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+                    fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
                 restartText.setInteractive();
                 restartText.on('pointerover', function() {
-                    var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+                    var hoverStyle = { fontFamily: 'Press Start 2P', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
                     restartText.setStyle(hoverStyle);
                     crosshair.setScale(1.5);
                 });
                 restartText.on('pointerout', function () {
-                    var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+                    var defaultStyle = { fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center' }; 
                     restartText.setStyle(defaultStyle);
                     crosshair.setScale(1);
                 });
@@ -513,16 +513,16 @@ export class Game extends Scene
                 });
                 
                 mainmenuText = this.add.text(600, 675, 'Main Menu', {
-                    fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+                    fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
                 mainmenuText.setInteractive();
                 mainmenuText.on('pointerover', function() {
-                    var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+                    var hoverStyle = { fontFamily: 'Press Start 2P', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
                     mainmenuText.setStyle(hoverStyle);
                     crosshair.setScale(1.5);
                 });
                 mainmenuText.on('pointerout', function () {
-                    var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+                    var defaultStyle = { fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center' }; 
                     mainmenuText.setStyle(defaultStyle);
                     crosshair.setScale(1);
                 });

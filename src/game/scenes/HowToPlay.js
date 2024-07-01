@@ -15,24 +15,24 @@ export class HowToPlay extends Scene
         this.add.image(600, 400, 'backgroundMenu').setAlpha(0.25);
 
         this.add.text(600, 50, 'How To Play', {
-            fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         this.add.text(600, 125, 'Welcome to Grenade-0, (Grenade Zero).\n Control your player to collect points, and shoot grenades at the monsters and flying bombs to get a high score.', {
-            fontFamily: 'Pixelify Sans', fontSize: 18, color: '#ffffff', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 18, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         menuText = this.add.text(600, 750, 'Back to Main Menu', {
-            fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 24, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
         menuText.setInteractive();
         menuText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Press Start 2P', fontSize: 38, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
             menuText.setStyle(hoverStyle);
             finger.setScale(1.5);
         });
         menuText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 24, color: '#ffffff', align: 'center' }; 
+            var defaultStyle = { fontFamily: 'Press Start 2P', fontSize: 24, color: '#ffffff', align: 'center' }; 
             menuText.setStyle(defaultStyle);
             finger.setScale(1);
         });

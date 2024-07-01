@@ -21,24 +21,24 @@ export class MainMenu extends Scene
         this.logo = this.add.image(600, 300, 'logo').setDepth(1);
 
         this.add.text(600, 355, '(Grenade Zero)', {
-            fontFamily: 'Pixelify Sans', fontSize: 16, color: '#f2e206', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 16, color: '#f2e206', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         this.add.text(600, 495, 'Main Menu', {
-            fontFamily: 'Pixelify Sans', fontSize: 24, color: '#f28b05', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 24, color: '#f28b05', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         playText = this.add.text(600, 600, 'Play Game', {
-            fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
         playText.setInteractive();
         playText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Press Start 2P', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
             playText.setStyle(hoverStyle);
             finger.setScale(1.5);
         });
         playText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+            var defaultStyle = { fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center' }; 
             playText.setStyle(defaultStyle);
             finger.setScale(1);
         });
@@ -47,16 +47,16 @@ export class MainMenu extends Scene
         });
 
         howToPlayText = this.add.text(600, 655, 'How to Play', {
-            fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center'
+            fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
         howToPlayText.setInteractive();
         howToPlayText.on('pointerover', function() {
-            var hoverStyle = { fontFamily: 'Pixelify Sans', fontSize: 52, color: '#f2cb04', align: 'center' }; 
+            var hoverStyle = { fontFamily: 'Press Start 2P', fontSize: 52, color: '#f2cb04', align: 'center' }; 
             howToPlayText.setStyle(hoverStyle);
             finger.setScale(1.5);
         });
         howToPlayText.on('pointerout', function () {
-            var defaultStyle = { fontFamily: 'Pixelify Sans', fontSize: 38, color: '#ffffff', align: 'center' }; 
+            var defaultStyle = { fontFamily: 'Press Start 2P', fontSize: 38, color: '#ffffff', align: 'center' }; 
             howToPlayText.setStyle(defaultStyle);
             finger.setScale(1);
         });
