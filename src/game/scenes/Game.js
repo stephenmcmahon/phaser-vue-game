@@ -25,6 +25,7 @@ var bombsKilled = 0;
 var gameOver = false;
 var scoreText;
 var levelText;
+var totalScoreText;
 var restartText;
 var mainmenuText;
 
@@ -66,6 +67,12 @@ export class Game extends Scene
         gameOver = false;
 
         // this.cameras.main.setBackgroundColor(0x00ff00);
+
+        for (let i = 0; i < 75; i++) {
+            const x = Phaser.Math.Between(0, 1200);
+            const y = Phaser.Math.Between(0, 650);
+            this.add.ellipse(x, y, 5, 5, 0xe4e4e4);
+        }
 
         this.add.image(600, 400, 'backgroundMenu');
 
@@ -464,7 +471,7 @@ export class Game extends Scene
             levelText.setVisible(false);
             gameOver = true;
             if (gameOver === true) {
-                this.add.rectangle(600, 400, 1200, 800, 0x8d83dc).setDepth(3).setBlendMode(Phaser.BlendModes.MULTIPLY);
+                this.add.rectangle(600, 400, 1200, 800, 0x423a7f).setDepth(3).setBlendMode(Phaser.BlendModes.MULTIPLY);
                 this.add.text(600, 75, 'Game Over', {
                   fontFamily: 'Tiny5', fontSize: 56, fontWeight: 700, color: '#f23839', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
@@ -493,13 +500,15 @@ export class Game extends Scene
                   fontFamily: 'Tiny5', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 520, 'Total Score:\n' + totalScore, { 
-                    fontFamily: 'Tiny5', fontSize: 42, color: '#f2e206', align: 'center' 
+                totalScoreText = this.add.text(600, 550, 'Total Score:\n' + totalScore, { 
+                    fontFamily: 'Tiny5', fontSize: 48, color: '#f2e206', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
+                totalScoreText.setStroke('#f28b0b', 4);
 
-                restartText = this.add.text(600, 625, 'Restart', {
+                restartText = this.add.text(600, 650, 'Restart', {
                     fontFamily: 'Tiny5', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
+                restartText.setStroke('#0d0d0d', 12);
                 restartText.setInteractive();
                 restartText.on('pointerover', function() {
                     var hoverStyle = { fontFamily: 'Tiny5', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
@@ -515,9 +524,10 @@ export class Game extends Scene
                     this.scene.restartScene();
                 });
                 
-                mainmenuText = this.add.text(600, 675, 'Main Menu', {
+                mainmenuText = this.add.text(600, 700, 'Main Menu', {
                     fontFamily: 'Tiny5', fontSize: 38, color: '#ffffff', align: 'center'
                 }).setDepth(3).setOrigin(0.5);
+                mainmenuText.setStroke('#0d0d0d', 12);
                 mainmenuText.setInteractive();
                 mainmenuText.on('pointerover', function() {
                     var hoverStyle = { fontFamily: 'Tiny5', fontSize: 52, fontWeight: 700, color: '#f2cb04', align: 'center' }; 
