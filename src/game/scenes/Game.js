@@ -40,6 +40,7 @@ var rotationSpeed = 0;
 var aKey;
 var dKey;
 var wKey;
+var sKey;
 
 export class Game extends Scene
 {
@@ -93,7 +94,7 @@ export class Game extends Scene
         player.body.setGravityY(1000);
 
         grenadeLauncher = this.add.image(player.x, player.y, 'grenadeLauncher');
-        grenadeLauncher.setOrigin(0.5, 0.75);
+        grenadeLauncher.setOrigin(0.5, 0.5);
 
         mobLauncher = this.add.image(600, 50, 'mobLauncher')
         mobLauncher.setDepth(2);
@@ -168,6 +169,7 @@ export class Game extends Scene
         aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
         const pointerMoverHandler = function(pointer) {
             target = Phaser.Math.Angle.BetweenPoints(mobLauncher, pointer);
@@ -280,10 +282,10 @@ export class Game extends Scene
 
             pointsCollected += 1;
 
-            if (player.y > 600) {
+            if (player.y > 700) {
               score += 3;
             } 
-            else if (player.y > 248){
+            else if (player.y > 348){
               score += 5;
             }
             else {
@@ -366,7 +368,7 @@ export class Game extends Scene
         }
 
         function shootGrenade(x, y) {
-            const grenade = this.physics.add.image(player.x, player.y, 'grenade');
+            const grenade = this.physics.add.image(player.x, player.y / 1.2, 'grenade');
             grenade.setOrigin(0, 0);
             grenades.add(grenade);
             this.physics.moveTo(grenade, x, y, 800);
@@ -585,16 +587,30 @@ export class Game extends Scene
 
             player.anims.play('turn');
         }
+
         if (Phaser.Input.Keyboard.JustDown(wKey) && player.body.touching.down)
         {
             player.setVelocityY(-900);
         }
 
+        if (sKey.isDown)
+        {
+            player.body.setSize(48, 74, false);
+            player.setTexture('dudeDuck');
+            player.setOrigin(0.5, 0.5);
+            grenadeLauncher.setPosition(player.x, player.y / 1);
+        }
+        else 
+        {
+            player.body.setSize(48, 96, false);
+            player.setOrigin(0.5, 1.5);
+            grenadeLauncher.setPosition(player.x, player.y - 100);
+        }
+    
         if (pointer.active) {
             crosshair.setPosition(pointer.x, pointer.y);
         }
 
-        grenadeLauncher.setPosition(player.x, player.y);
         grenadeLauncher.rotation = Phaser.Math.Angle.RotateTo(grenadeLauncher.rotation, playerTarget, rotationSpeed * 0.5);
 
         mobLauncher.rotation = Phaser.Math.Angle.RotateTo(mobLauncher.rotation, target, rotationSpeed * 0.006);
