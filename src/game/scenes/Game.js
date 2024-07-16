@@ -563,7 +563,7 @@ export class Game extends Scene
 
             if (player.body.touching.none)
             {
-                player.setVelocityX(-250);
+                player.setVelocityX(-200);
 
                 player.anims.play('sideleft', true);
             }
@@ -576,7 +576,7 @@ export class Game extends Scene
 
             if (player.body.touching.none)
             {
-                player.setVelocityX(250);
+                player.setVelocityX(200);
 
                 player.anims.play('sideright', true);
             }
@@ -597,8 +597,12 @@ export class Game extends Scene
         {
             player.body.setSize(48, 74, false);
             player.setTexture('dudeDuck');
-            player.setOrigin(0.5, 1.5);
             grenadeLauncher.setPosition(player.x, player.y - 50);
+            if (player.y > 700)
+            {
+              player.setOrigin(0.5, 0.5);
+              grenadeLauncher.setPosition(player.x, player.y - 20);
+            }
         }
         else 
         {
