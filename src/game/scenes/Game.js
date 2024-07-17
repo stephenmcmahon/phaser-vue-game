@@ -92,6 +92,7 @@ export class Game extends Scene
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.body.setGravityY(1000);
+        player.setMaxVelocity(500, 900);
 
         grenadeLauncher = this.add.image(player.x, player.y, 'grenadeLauncher');
         grenadeLauncher.setOrigin(0.5, 0.5);
@@ -555,36 +556,42 @@ export class Game extends Scene
 
     update ()
     {
+        player.setAcceleration(0, 0);
+
         if (aKey.isDown)
         {
-            player.setVelocityX(-500);
+            player.setAccelerationX(-750);
 
             player.anims.play('left', true);
 
             if (player.body.touching.none)
             {
-                player.setVelocityX(-200);
+                player.setAccelerationX(-450);
 
                 player.anims.play('sideleft', true);
             }
         }
         else if (dKey.isDown)
         {
-            player.setVelocityX(500);
+            player.setAccelerationX(750);
 
             player.anims.play('right', true);
 
             if (player.body.touching.none)
             {
-                player.setVelocityX(200);
+                player.setAccelerationX(450);
 
                 player.anims.play('sideright', true);
             }
         }
         else
         {
-            player.setVelocityX(0);
+            player.setAcceleration(0, 0);
 
+            setTimeout(() => {
+              player.setVelocityX(0);
+            }, 250); 
+           
             player.anims.play('turn');
         }
 
