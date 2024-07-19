@@ -33,6 +33,9 @@ var mainmenuText;
 var target = 0;
 var playerTarget = 0;
 var rotationSpeed = 0;
+var maxSpeed = 400;
+var acceleration = 10;
+var deceleration = 5;
 // var timedEvent;
 // const layerBackground = this.add.layer();
 
@@ -560,39 +563,41 @@ export class Game extends Scene
 
         if (aKey.isDown)
         {
-            player.setAccelerationX(-750);
+            player.setVelocityX(Math.max(player.body.velocity.x - acceleration, -maxSpeed));
 
             player.anims.play('left', true);
 
             if (player.body.touching.none)
             {
-                player.setAccelerationX(-450);
+                player.setVelocityX((-maxSpeed / 1.5));
 
                 player.anims.play('sideleft', true);
             }
         }
         else if (dKey.isDown)
         {
-            player.setAccelerationX(750);
+            player.setVelocityX(Math.min(player.body.velocity.x + acceleration, maxSpeed));
 
             player.anims.play('right', true);
 
             if (player.body.touching.none)
             {
-                player.setAccelerationX(450);
+                player.setVelocityX((maxSpeed / 1.5));
 
                 player.anims.play('sideright', true);
             }
         }
         else
         {
-            player.setAcceleration(0, 0);
+          if (player.body.velocity.x > 0) {
+              player.setVelocityX(Math.max(player.body.velocity.x - deceleration, 0));
+          }
 
-            setTimeout(() => {
-              player.setVelocityX(0);
-            }, 250); 
+          else if (player.body.velocity.x < 0) {
+              player.setVelocityX(Math.min(player.body.velocity.x + deceleration, 0));
+          }
            
-            player.anims.play('turn');
+          player.anims.play('turn');
         }
 
         if (Phaser.Input.Keyboard.JustDown(wKey) && player.body.touching.down)
