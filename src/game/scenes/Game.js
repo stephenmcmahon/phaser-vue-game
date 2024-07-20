@@ -33,9 +33,9 @@ var mainmenuText;
 var target = 0;
 var playerTarget = 0;
 var rotationSpeed = 0;
-var maxSpeed = 400;
-var acceleration = 10;
-var deceleration = 5;
+var maxSpeed = 0;
+var acceleration = 0;
+var deceleration = 0;
 // var timedEvent;
 // const layerBackground = this.add.layer();
 
@@ -67,6 +67,10 @@ export class Game extends Scene
 
         target = 0;
         rotationSpeed = 1 * Math.PI;
+
+        maxSpeed = 400;
+        acceleration = 8;
+        deceleration = 4;
 
         gameOver = false;
 
