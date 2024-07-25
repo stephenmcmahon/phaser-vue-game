@@ -68,9 +68,9 @@ export class Game extends Scene
         target = 0;
         rotationSpeed = 1 * Math.PI;
 
-        maxSpeed = 500 * level / 1.5;
-        acceleration = 8;
-        deceleration = 8;
+        maxSpeed = 500 * level;
+        acceleration = 8 * level;
+        deceleration = 8 * level;
 
         gameOver = false;
 
@@ -82,7 +82,7 @@ export class Game extends Scene
             this.add.ellipse(x, y, 5, 5, 0xe4e4e4);
         }
 
-        this.add.image(600, 400, 'backgroundMenu');
+        this.add.image(600, 400, 'backgroundMenu').setAlpha(0.5);
 
         platforms = this.physics.add.staticGroup();
         platforms.create(600, -10, 'ground');
@@ -616,8 +616,8 @@ export class Game extends Scene
             grenadeLauncher.setPosition(player.x, player.y - 50);
             if (player.y > 700)
             {
-              player.setOrigin(0.5, 0.5);
-              grenadeLauncher.setPosition(player.x, player.y - 20);
+              player.setOrigin(0.5, 1);
+              grenadeLauncher.setPosition(player.x, player.y - 40);
             }
         }
         else 
