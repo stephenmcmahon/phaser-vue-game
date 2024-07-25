@@ -68,9 +68,9 @@ export class Game extends Scene
         target = 0;
         rotationSpeed = 1 * Math.PI;
 
-        maxSpeed = 400;
+        maxSpeed = 500 * level / 1.5;
         acceleration = 8;
-        deceleration = 4;
+        deceleration = 8;
 
         gameOver = false;
 
@@ -637,19 +637,16 @@ export class Game extends Scene
         
         mobs.children.iterate(function (child) {
             if (player.x > child.x) {
-                child.setVelocityX(Phaser.Math.Between(75, 125));
-            }
-            else {
-                child.setVelocityX(Phaser.Math.Between(-75, -125));
-            }
-
-            if (child.body.velocity.x > 0)
-            {
+                child.setVelocityX(Phaser.Math.Between(75, 125) * level / 2);
                 child.anims.play('mobmoveright', true);
             }
-            else
-            {
+            else {
+                child.setVelocityX(Phaser.Math.Between(-75, -125) * level / 2);
                 child.anims.play('mobmoveleft', true);
+            }
+
+            if (player.x == child.x) {
+              child.anims.play('mobturn', true);
             }
 
             if (gameOver === true) {
