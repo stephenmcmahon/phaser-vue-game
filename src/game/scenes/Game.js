@@ -243,7 +243,7 @@ export class Game extends Scene
 
         bombs = this.physics.add.group();
 
-        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Tiny5', fontSize: '24px', fill: '#fff' });
+        scoreText = this.add.text(70, 30, 'Score: ' + score + '\nCoins Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled, { fontFamily: 'Tiny5', fontSize: '24px', fill: '#fff' });
 
         levelText = this.add.text(600, 40, 'Level: ' + level, { fontFamily: 'Tiny5', fontSize: '36px', fill: '#fff', align: 'center' });
         levelText.setDepth(2);
@@ -300,7 +300,7 @@ export class Game extends Scene
               score += 7;
             }
 
-            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
+            scoreText.setText('Score: ' + score + '\nCoins Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
 
             if (stars.countActive(true) === 0)
             {
@@ -329,7 +329,7 @@ export class Game extends Scene
             mob.disableBody(true, true);
             mobsKilled += 1;
             score += 5;
-            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
+            scoreText.setText('Score: ' + score + '\nCoins Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (mobs.countActive(true) === 0)
             {
                 setTimeout(() => {
@@ -344,7 +344,7 @@ export class Game extends Scene
         {
             bombsKilled += 1;
             score += 7;
-            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
+            scoreText.setText('Score: ' + score + '\nCoins Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             bomb.disableBody(true, true);
         }
 
@@ -352,7 +352,7 @@ export class Game extends Scene
         {
             star.disableBody(true, true);
             score -= 1;
-            scoreText.setText('Score: ' + score + '\nPoints Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
+            scoreText.setText('Score: ' + score + '\nCoins Collected: ' + pointsCollected + '\nMobs Killed: ' + mobsKilled + '\nBombs Killed: ' + bombsKilled);
             if (stars.countActive(true) === 0)
             {
                 setTimeout(() => {
@@ -498,7 +498,7 @@ export class Game extends Scene
                     fontFamily: 'Tiny5', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 320, 'Points Collected:\n' + pointsCollected, { 
+                this.add.text(600, 320, 'Coins Collected:\n' + pointsCollected, { 
                   fontFamily: 'Tiny5', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
