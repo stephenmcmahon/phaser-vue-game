@@ -95,7 +95,7 @@ export class Game extends Scene
         walls.create(0, 400, 'wall');
         walls.create(1200, 400, 'wall');
 
-        player = this.physics.add.sprite(200, 600, 'dude');
+        player = this.physics.add.sprite(200, 750, 'dude');
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.body.setGravityY(1000);
@@ -494,7 +494,7 @@ export class Game extends Scene
                     fontFamily: 'Tiny5', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
-                this.add.text(600, 260, 'Score:\n' + score, { 
+                this.add.text(600, 260, 'In-Game Score:\n' + score, { 
                     fontFamily: 'Tiny5', fontSize: 24, color: '#f2cb04', align: 'center' 
                 }).setDepth(3).setOrigin(0.5);
 
