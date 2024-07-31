@@ -317,7 +317,7 @@ export class Game extends Scene
                     bombs.children.iterate(function (child) {
                         child.setBounce(1);
                         child.setCollideWorldBounds(true);
-                        child.setVelocity(Phaser.Math.Between(-600, 600), 20);
+                        child.setVelocity(Phaser.Math.Between(-600, 600), 5 * level);
                         child.allowGravity = false;
                     });
                 }, 1000); 
@@ -368,7 +368,7 @@ export class Game extends Scene
                     bombs.children.iterate(function (child) {
                         child.setBounce(1);
                         child.setCollideWorldBounds(true);
-                        child.setVelocity(Phaser.Math.Between(-600, 600), 20);
+                        child.setVelocity(Phaser.Math.Between(-600, 600), 5 * level);
                         child.allowGravity = false;
                     });
                 }, 1000); 
