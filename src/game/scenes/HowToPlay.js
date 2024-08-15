@@ -19,7 +19,27 @@ export class HowToPlay extends Scene
         }).setDepth(1).setOrigin(0.5);
 
         this.add.text(600, 125, 'Welcome to Grenade-0, (Grenade Zero).\n Control your player to collect points, and shoot grenades at the monsters and flying bombs to get a high score.', {
-            fontFamily: 'Tiny5', fontSize: 18, color: '#ffffff', align: 'center'
+            fontFamily: 'Tiny5', fontSize: 20, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(600, 250, 'Controls', {
+            fontFamily: 'Tiny5', fontSize: 32, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(500, 325, 'Move Left = A', {
+            fontFamily: 'Tiny5', fontSize: 24, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(700, 325, 'Move Right = D', {
+            fontFamily: 'Tiny5', fontSize: 24, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(600, 375, 'Jump Up (Can`t jump through platforms) = W', {
+            fontFamily: 'Tiny5', fontSize: 24, color: '#ffffff', align: 'center'
+        }).setDepth(1).setOrigin(0.5);
+
+        this.add.text(600, 425, 'Crouch / Duck / Move Down Through Platform = S', {
+            fontFamily: 'Tiny5', fontSize: 24, color: '#ffffff', align: 'center'
         }).setDepth(1).setOrigin(0.5);
 
         menuText = this.add.text(600, 750, 'Back to Main Menu', {
